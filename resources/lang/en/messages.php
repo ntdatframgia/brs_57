@@ -24,4 +24,7 @@ return [
     'welcome_admin' => 'Welcome admin',
     'avatar' => 'Avatar',
     'profile' => 'Profile',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'update' => 'Update',
 ];

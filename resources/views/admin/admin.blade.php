@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{url('dist/css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{url('dist/css/mystyle.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{url('dist/css/skins/_all-skins.min.css')}}">
@@ -41,7 +42,7 @@
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">@lang('messages.Toggle Navigation')</span>
+        <span class="sr-only">@lang('messages.toggle_navigation')</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -63,7 +64,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="{{ asset($user->getPathAvatar()) }}" class="img-circle" alt="User Image">
+                        <img src="{{ asset(Auth::user()->getPathAvatar()) }}" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -424,7 +425,7 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<script>
 <!-- jQuery 2.2.3 -->
 <script src="{{url('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 <!-- Bootstrap 3.3.6 -->

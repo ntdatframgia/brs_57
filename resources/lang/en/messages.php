@@ -28,4 +28,7 @@ return [
     '404' => '404 Not Found',
     'err_message' => 'Sorry, an error has occured, Requested page not found!',
     'take_me_home' => 'Take Me Home',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'update' => 'Update',
 ];

@@ -2,9 +2,13 @@
 @section('content')
     <div class="box-header">
         <h3 class="box-title"> {{ trans('messages.listuser') }}</h3>
-        <div class="box-tools">
-            <div class="input-group input-group-sm">
-            </div>
+      <a href="{{ route('users.create') }}" ><button class="btn btn-primary pull-right">Add User</button></a>
+      @if (session('status'))
+         <div class="alert alert-success alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a>
+          {{ session('status') }}
+        </div>
+      @endif
         </div>
     </div>
     <!-- /.box-header -->

@@ -6,15 +6,20 @@
   <title>AdminLTE 2 | Blank Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="{{url('bootstrap/css/bootstrap.min.css')}}">
-  <!-- Font Awesome -->
+  Font Awesome
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
+  Ionicons
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{url('dist/css/AdminLTE.min.css')}}">
-  <link rel="stylesheet" href="{{url('dist/css/mystyle.css')}}">
+  <!-- Bootstrap 3.3.6 -->
+<!--   <link rel="stylesheet" href="{{url('bootstrap/css/bootstrap.min.css')}}">
+
+Theme style
+<link rel="stylesheet" href="{{url('dist/css/AdminLTE.min.css')}}">
+
+<link rel="stylesheet" href="{{url('plugins/datepicker/datepicker3.css')}}">
+
+<link rel="stylesheet" href="{{url('dist/css/mystyle.css')}}"> -->
+  <link rel="stylesheet" href="{{url('css/all.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{url('dist/css/skins/_all-skins.min.css')}}">
@@ -424,22 +429,7 @@
 
   <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
-<!-- jQuery 2.2.3 -->
-
-<script src="{{url('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="{{url('bootstrap/js/bootstrap.min.js')}}"></script>
-<!-- SlimScroll -->
-<script src="{{url('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{url('plugins/fastclick/fastclick.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{url('dist/js/app.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{url('dist/js/demo.js')></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{url('dist/js/myscrip.js')></script>
+<script src="{{url('js/all.js')}}"></script>
 
 </body>
 </html>

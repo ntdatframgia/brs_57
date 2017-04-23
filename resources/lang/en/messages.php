@@ -27,4 +27,11 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'update' => 'Update',
+    'create_category' => 'Create Category',
+    'category_name' => 'Category Name',
+    'create' => 'Create',
+    'parent_category' => 'Parent Category',
+    'please_select_category' => 'Please Select Category',
+    'list_category' => 'List Categories',
+    'list_category' => 'List Categories',
 ];

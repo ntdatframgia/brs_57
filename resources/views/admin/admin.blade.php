@@ -425,8 +425,8 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<script>
 <!-- jQuery 2.2.3 -->
+
 <script src="{{url('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{url('bootstrap/js/bootstrap.min.js')}}"></script>
@@ -438,5 +438,8 @@
 <script src="{{url('dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{url('dist/js/demo.js')></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{url('dist/js/myscrip.js')></script>
+
 </body>
 </html>

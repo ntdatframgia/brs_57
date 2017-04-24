@@ -25,7 +25,6 @@ class Book extends Model
 
     public function getPathBookImage()
     {
-        return "../storage/app/book/$this->img";
+        return config('custom.PathBookImage') . $this->img;
     }
-
 }

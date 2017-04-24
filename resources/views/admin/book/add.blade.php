@@ -18,7 +18,7 @@
                       <div class="col-md-7">
                           <select name="parent" required="required" class ="form-control" id="parent" autofocus >
                               <option value="">Please Choose Parent Category</option>
-                              <?php saiki_category($listcate, 0, '--', 0);?>
+                              <?php saiki_category($listCate, 0, '--', 0);?>
                           </select>
                           {{ Form::showErrField('parent') }}
                       </div>

@@ -60,7 +60,7 @@ class BookController extends Controller
         $book->img = time() . '.' . $file->extension();
         $this->uploadImage($request);
         $book->save();
-        return redirect('users')->with('status', $request->name . ' Added Successfully !!!');
+        return redirect('book')->with('status', $request->name . ' Added Successfully !!!');
     }
 
     /**
@@ -115,6 +115,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $file = $request->file('image');
         if ($file != null) {
+            File::delete('../storage/app/avatar/' . $user->avatar);
             $book->img = time() . '.' . $file->extension();
             $this->uploadImage($request);
         }

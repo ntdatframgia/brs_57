@@ -112,7 +112,7 @@ class UserController extends Controller
         }
 
         if ($file != null) {
-            File::delete('../storage/app/avatar/' . $user->avatar);
+            File::delete($this->getPathAvatar());
             $this->uploadavatar($request);
             $user->avatar = time() . '.' . $file->extension();
         }

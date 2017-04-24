@@ -69,7 +69,7 @@ class User extends Authenticatable
 
     public function getPathAvatar()
     {
-        return "../storage/app/avatar/$this->avatar";
+        return config('custom.pathAvatar') . $this->avatar;
     }
 
     public function setPasswordAttribute($value)

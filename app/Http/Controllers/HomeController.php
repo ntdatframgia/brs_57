@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Book;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $books = Book::all();
+        return view('frontend.index', ['books' => $books]);
     }
+
+    public function detailBook(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $comment = Comment::where('book_id', $id)->orderBy('created_at', 'desc')->paginate(2);
+        if ($request->ajax()) {
+            /*foreach ($comment as $value) {
+                # code...
+            }*/
+            return count($comment);
+            return view('layouts.boxComment', ['comment' => $comment]);
+        }
+        return view('frontend.detail', ['book' => $book, 'comments' => $comment]);
+    }
+
 }

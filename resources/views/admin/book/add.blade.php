@@ -1,7 +1,7 @@
 @extends('admin.admin')
 @section('content')
 <div class="container">
-    <h1>@lang('messages.add_book')</h1>
+    <h1>{{trans('messages.add_book')}}</h1>
     <hr>
     <div class="row">
             <div class="col-md-7 personal-info">
@@ -45,6 +45,18 @@
                               'autofocus'
                           ]) !!}
                           {{ Form::showErrField('author') }}
+                      </div>
+                  </div>
+                  <div class="{!! Form::showErrClass('description') !!}">
+                      {!! Form::label('description', trans('messages.description'), ['class'=> 'col-md-4 control-label']) !!}
+                      <div class="col-md-7">
+                          {!! Form::textarea('description', null, [
+                              'class' => 'form-control',
+                              'id' => 'description',
+                              'required',
+                              'autofocus'
+                          ]) !!}
+                          {{ Form::showErrField('description') }}
                       </div>
                   </div>
                   <div class=" {!! Form::showErrClass('public_date') !!}">

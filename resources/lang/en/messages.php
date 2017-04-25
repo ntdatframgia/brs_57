@@ -41,4 +41,5 @@ return [
     'add_book' => 'Add Book',
     'public_date' => 'Public Date',
     'category' => 'Category',
+    'description' => 'Description',
 ];

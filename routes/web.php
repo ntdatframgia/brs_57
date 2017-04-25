@@ -13,10 +13,15 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
 
 Route::resource('user', 'UserController');
 
 Route::resource('category', 'CategoryController');
 
 Route::resource('book', 'BookController');
+
+Route::resource('comment', 'CommentController');
+
+Route::get('/home/index', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+
+Route::get('/home/detail/{id}', ['as' => 'home.detail', 'uses' => 'HomeController@detailBook']);

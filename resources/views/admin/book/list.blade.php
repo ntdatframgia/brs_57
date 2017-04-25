@@ -22,6 +22,7 @@
           <th>{{ trans('messages.book_image') }}</th>
           <th>{{ trans('messages.book_name') }}</th>
           <th>{{ trans('messages.author') }}</th>
+          <th>{{ trans('messages.description') }}</th>
           <th>{{ trans('messages.number_of_page') }}</th>
           <th>{{ trans('messages.category') }}</th>
           <th>{{ trans('messages.public_date') }}</th>
@@ -31,9 +32,10 @@
         @foreach ($books as $book)
         <tr>
           <td>{{ $book->id }}</td>
-          <td><img src=" {{ asset($book->getPathBookImage())}}" class="imagess img-circle" ></img></td>
+          <td><img src=" {{ asset($book->path_book_image)}}" class="imagess" ></img></td>
           <td>{{ $book->name }}</td>
           <td> {{ $book->author }} </td>
+          <td> {{ str_limit($book->description, $limit = 100, $end = '...') }} </td>
           <td> {{ $book->number_of_page }}</td>
           <td> {{ $book->category->name }} </td>
           <td> {{ $book->public_date }} </td>

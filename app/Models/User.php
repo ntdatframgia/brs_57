@@ -67,7 +67,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follow_id', 'user_id');
     }
 
-    public function getPathAvatar()
+    public function getPathAvatarttribute()
     {
         return config('custom.pathAvatar') . $this->avatar;
     }

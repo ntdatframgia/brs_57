@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Book;
+use File;
 
 class BookController extends Controller
 {
@@ -42,6 +43,7 @@ class BookController extends Controller
             'name' => 'required',
             'parent' => 'required',
             'author' => 'required',
+            'description' => 'required',
             'public_date' => 'date|required|',
             'image' => 'required|image|max:2000',
             'number_of_page' => 'required',
@@ -53,6 +55,8 @@ class BookController extends Controller
         $book->name = $request->name;
         $book->public_date = $publicDate;
         $book->author = $request->author;
+
+        $book->description = $request->description;
         $book->number_of_page = $request->number_of_page;
         $book->category_id = $request->parent;
         $book->rate = config('custom.rate');
@@ -60,7 +64,7 @@ class BookController extends Controller
         $book->img = time() . '.' . $file->extension();
         $this->uploadImage($request);
         $book->save();
-        return redirect('book')->with('status', $request->name . ' Added Successfully !!!');
+        return redirect('users')->with('status', $request->name . ' Added Successfully !!!');
     }
 
     /**
@@ -101,6 +105,7 @@ class BookController extends Controller
             'name' => 'required',
             'parent' => 'required',
             'author' => 'required',
+            'description' => 'required',
             'public_date' => 'date|required|',
             'image' => 'image|max:2000',
             'number_of_page' => 'required',
@@ -115,7 +120,9 @@ class BookController extends Controller
         $book->author = $request->author;
         $file = $request->file('image');
         if ($file != null) {
-            File::delete('../storage/app/avatar/' . $user->avatar);
+            File::delete('../storage/app/book/' . $book->img);
+            $book->description = $request->description;
+            $file = $request->file('image');
             $book->img = time() . '.' . $file->extension();
             $this->uploadImage($request);
         }

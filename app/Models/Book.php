@@ -23,8 +23,18 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getPathBookImage()
+    public function comments()
     {
-        return config('custom.PathBookImage') . $this->img;
+        return $this->hasMany(Comment::class);
+    }
+
+    public function getPathBookImageAttribute()
+    {
+        return config('custom.pathBookImage').$this->img;
+    }
+
+    public function getCountCommentOfBookAttribute()
+    {
+        return $this->comments()->count();
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
     <div class="box-header">
       <h3 class="box-title">{{ trans('messages.list_user') }}</h3>
-      <a href="{{ route('users.create') }}" ><button class="btn btn-primary pull-right">Add User</button></a>
+      <a href="{{ route('user.create') }}" ><button class="btn btn-primary pull-right">Add User</button></a>
       @if (session('status'))
          <div class="alert alert-success alert-dismissable">
           <a class="panel-close close" data-dismiss="alert">×</a>
@@ -33,8 +33,8 @@
           <td> {{ $user->email }} </td>
           <td> {{ $user->fullname }} </td>
           <td> {{ $user->created_at->diffForHumans() }} </td>
-          <td><a href="{{ route("users.edit",$user->id)}}" ><button class="btn btn-link" ><i class="editu fa fa-edit"></i></button></a> </td>
-          <td>   {{ Form::open(array('url' => 'users/' . $user->id, )) }}
+          <td><a href="{{ route("user.edit",$user->id)}}" ><button class="btn btn-link" ><i class="editu fa fa-edit"></i></button></a> </td>
+          <td>   {{ Form::open(array('url' => 'user/' . $user->id, )) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     {{ Form::button('<i class="deleteu fa fa-times"></i>', array('type' =>'submit','onclick' => 'return confirm("Do you want to delete ?")', 'class' => ' deleteu btn-link')) }}
                 {{ Form::close() }}

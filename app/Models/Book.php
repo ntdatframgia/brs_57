@@ -23,9 +23,9 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getPathBookImage()
+    public function getPathBookImageAttribute()
     {
-        return "../storage/app/book/$this->img";
+        return config('custom.pathBookImage').$this->img;
     }
 
 }

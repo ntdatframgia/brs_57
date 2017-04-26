@@ -43,8 +43,6 @@ class CommentController extends Controller
             $comment->book_id = $request->bookId;
             $comment->comment = $request->comment;
             $comment->save();
-            $comment = $request->comment;
-           //return view('layouts.boxComment', ['user' => $user, 'comment' => $request->comment]);
             return view('layouts.boxComment', ['comment' => $comment]);
         }
     }
@@ -80,7 +78,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $update = Comment::findOrFail($request->id);
+            $update->comment = $request->data;
+            $update->update();
+            return response()->json([
+                'data' => $request->data,
+                'updated_at' => $update->updated_at->diffForHumans(),
+            ]);
+        }
     }
 
     /**
@@ -89,8 +95,12 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $comment = Comment::findOrFail($id);
+            $comment->delete();
+            return 'succsess';
+        }
     }
 }

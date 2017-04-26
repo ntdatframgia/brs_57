@@ -32,15 +32,18 @@ class HomeController extends Controller
     public function detailBook(Request $request, $id)
     {
         $book = Book::findOrFail($id);
-        $comment = Comment::where('book_id', $id)->orderBy('created_at', 'desc')->paginate(2);
+        $comments = Comment::where('book_id', $id)->orderBy('created_at', 'desc')->paginate(4);
         if ($request->ajax()) {
-            /*foreach ($comment as $value) {
-                # code...
-            }*/
-            return count($comment);
-            return view('layouts.boxComment', ['comment' => $comment]);
+            return response()->json([
+                'current_page' => $comments->currentPage(),
+                'count' => $comments->count(),
+                'total' => $comments->total(),
+                'last_page' => $comments->lastPage(),
+                'nextPage' => $comments->nextPageUrl(),
+                'html' => view('layouts.pagination', ['comments' => $comments])->render(),
+            ]);
         }
-        return view('frontend.detail', ['book' => $book, 'comments' => $comment]);
+        return view('frontend.detail', ['book' => $book, 'comments' => $comments]);
     }
 
 }

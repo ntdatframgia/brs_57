@@ -37,4 +37,9 @@ class Book extends Model
     {
         return $this->comments()->count();
     }
+
+    public function mark()
+    {
+        return $this->hasOne(Mark::Class);
+    }
 }

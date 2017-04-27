@@ -79,13 +79,25 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
-            $update = Comment::findOrFail($request->id);
-            $update->comment = $request->data;
-            $update->update();
-            return response()->json([
-                'data' => $request->data,
-                'updated_at' => $update->updated_at->diffForHumans(),
-            ]);
+            if ($request->action == 'like') {
+                $update = Comment::where([['user_id', $request->userId], ['book_id', $request->bookId], ['id', $request->commentId]])->get()->first();
+                if (!$update->like_uses_id) {
+                    $update->like = $update->like+1;
+                } else {
+                    $update->like = $update->like-1;
+                }
+                $update->update();
+                return $update->like;
+            } else {
+                $update = Comment::findOrFail($request->id);
+                $update->comment = $request->data;
+                $update->update();
+                return response()->json([
+                    'data' => $request->data,
+                    'updated_at' => $update->updated_at->diffForHumans(),
+                ]);
+            }
+
         }
     }
 
@@ -98,7 +110,9 @@ class CommentController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            return $request->all();
+            $comment = Comment::findOrFail($id);
+            $comment->delete();
+            return 'succsess';
         }
     }
 }

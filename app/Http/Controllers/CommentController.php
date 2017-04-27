@@ -98,7 +98,9 @@ class CommentController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            return $request->all();
+            $comment = Comment::findOrFail($id);
+            $comment->delete();
+            return 'succsess';
         }
     }
 }

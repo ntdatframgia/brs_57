@@ -3,5 +3,5 @@
 .imagess { width: :50px; height:50px; }
 .fixsome {height: 40px;}
 .bookimage { width: :120px; height:125px; }
-.editcomment {cursor: pointer;}
-.deleteComment {cursor: pointer;}
+.favoriteStatus {color: #FFD700;}
+.readStatus {color: red;}

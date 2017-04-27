@@ -29,7 +29,7 @@
         @foreach ($users as $user)
         <tr>
           <td>{{ $user->id}}</td>
-          <td><img src=" {{ asset($user->getPathAvatar()) }}" class="imagess" ></img></td>
+          <td><img src=" {{ asset($user->path_avatar) }}" class="imagess" ></img></td>
           <td> {{ $user->email }} </td>
           <td> {{ $user->fullname }} </td>
           <td> {{ $user->created_at->diffForHumans() }} </td>

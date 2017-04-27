@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Comment;
+use App\Models\Mark;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +28,8 @@ class HomeController extends Controller
     public function index()
     {
         $books = Book::all();
-        return view('frontend.index', ['books' => $books]);
+        $mark = Mark::Where('user_id', Auth::user()->id)->get();
+        return view('frontend.index', ['books' => $books, 'mark' => $mark]);
     }
 
     public function detailBook(Request $request, $id)

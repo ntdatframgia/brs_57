@@ -14,8 +14,11 @@
           <ul class="list-inline list-unstyled">
             <li><span><i class="fa fa-calendar-check-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d', $book->public_date)->format('d M Y')  }} </span></li>
             <li>|</li>
-            category
-           <!--  <span><i class="fa fa-link"></i> </span> -->
+            @if($book->category->deleted_at)
+              {{ "category" }}
+            @else
+              <i class='fa fa-fw fa-tag'></i>{{ $book->category->name }}
+            @endif
             <li>|</li>
             <li>
             <span><i class="fa fa-comments"></i> {{ $book->count_comment_of_book }} comments</span>
@@ -27,7 +30,7 @@
                  data-markid="{{ $book->mark['id'] }}" data-bookId="{{ $book->id }}"
                  data-user="{{ Auth::user()->id }}" data-url="{{ route('mark.store') }}"
                  data-token={{ csrf_token() }} class="markItem btn btn-box " data-toggle="tooltip" title="" data-original-title="Mark as favorite">
-                  <i data-id="{{ $book->id }}" class=" @if ( $book->mark['favorite'] == 1 && Auth::user()->id == $book->mark['user_id']) {{ "favoriteStatus" }} @endif  fa fa-star"></i></span>
+                  <i data-id="{{ $book->id }}" class=" @if ( $book->mark['favorite'] == 1 && Auth::user()->id == $book->mark['user_id']) {{ "favoriteStatus" }} @endif  fa fa-fw fa-bookmark"></i></span>
             </li>
             <li>|</li>
             <li>

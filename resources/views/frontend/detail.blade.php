@@ -11,13 +11,23 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
+    <h1 class="text-center">{{ $book->name}}</h1>
       <img class="img-responsive center-block" src="{{ asset($book->path_book_image)}}" alt="Photo">
 
       <p>{{ $book->description }}</p>
-        <button data-id="{{ $book->id }}" class="favorite btn btn-box" data-toggle="tooltip" title="" data-original-title="Mark as favorite"><i class="fa fa-star " ></i> Favorite </button>
-        <button data-id="{{ $book->id }}" class="readed btn btn-box" data-toggle="tooltip" title="" data-original-title="Mark as readed"><i class="fa fa-flag fa-2" ></i> Read </button>
-        <button data-id="{{ $book->id }}" class="readding btn btn-box" data-toggle="tooltip" title="" data-original-title="Mark as favorite"><i class="fa fa-flag-checkered" ></i> Reading </button>
-
+        <h1>Rate for book</h1>
+        <fieldset class="rating" @if ($book->user_id == Auth::user()->id) {{ 'disabled="disable"' }} @endif data-id="{{ $book->id}}" data-url="{{ route('book.update',$book->id)}}" data-userId={{ Auth::user()->id }} data-token ="{{ csrf_token() }}" data-type ="vote">
+            <input class="star1" type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+            <input class="star1" type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+            <input class="star1" type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+            <input class="star1" type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+            <input class="star1" type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+            <input class="star1" type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+            <input class="star1" type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input class="star1" type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+            <input class="star1" type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+            <input class="star1" type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+        </fieldset>
         <span class="pull-right text-muted"> <span id="countItem" data-sum="{{ $comments->count() }}" >{{ $comments->count() }}</span>/{{ $comments->total() }} comments</span>
     </div>
     <!-- /.box-body -->
@@ -42,7 +52,7 @@
                         <a href="javascript:void(0)"><i data-id="{{ $cm->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('comment.destroy',$cm->id)}}" class="deleteComment fa fa-times fa-1 pull-right"></i></a>
                         <a href="javascript:void(0)"><i data-id="{{ $cm->id }}"  data-token="{{ csrf_token() }}" class="editcomment fa fa-pencil-square-o fa-1 pull-right" ></i></a>
                     @endif
-                    <p data-id="{{$cm->id}}" data-userId ="{{ Auth::user()->id }}"  class="commentText">{{ $cm->comment }}  <br/><button data-id="{{ $cm->id }}" data-action="like" type="button" data-bookId=" {{$book->id}} " data-userId ="{{ Auth::user()->id }}" class="like btn btn-default btn-xs" data-token="{{ csrf_token() }}" data-url="{{ route('comment.update',$cm->id) }}"><i class="fa fa-thumbs-o-up"></i> Like</button></p>
+                    <p data-id="{{$cm->id}}" data-userId ="{{ Auth::user()->id }}"  class="commentText">{{ $cm->comment }}</p>
                     <textarea data-url="{{ route('comment.update',$cm->id) }}" data-token="{{ csrf_token() }}"  data-id="{{ $cm->id }}" class="form-control edit-comment-text hide" >{{ $cm->comment }} </textarea>
               </div>
         </div>

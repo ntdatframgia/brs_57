@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Book extends Model
 {
@@ -40,6 +41,6 @@ class Book extends Model
 
     public function mark()
     {
-        return $this->hasOne(Mark::Class);
+        return $this->hasOne(Mark::Class)->where('user_id', Auth::user()->id);
     }
 }

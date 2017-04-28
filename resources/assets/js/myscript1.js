@@ -125,9 +125,9 @@ $( document ).ready(function() {
                     },
             success:function(data){
                 if (data.favorite == 0){
-                    $('.fa-star[data-id="' + bookId + '"]').removeClass('favoriteStatus');
+                    $('.fa-bookmark[data-id="' + bookId + '"]').removeClass('favoriteStatus');
                 } else {
-                    $('.fa-star[data-id="' + bookId + '"]').addClass('favoriteStatus');
+                    $('.fa-bookmark[data-id="' + bookId + '"]').addClass('favoriteStatus');
                 }
                 if (data.read_status == 0) {
                     $('.fa-flag-checkered[data-id="' + bookId + '"]').removeClass('readStatus');
@@ -142,22 +142,24 @@ $( document ).ready(function() {
             }
         });
     });
-    // like a comment
-    $(document).on('click', '.like' ,function(){
-        var userId = $(this).attr('data-userId');
-        alert(userId);
-        var bookId = $(this).attr('data-bookId');
-        var url = $(this).attr('data-url');
-        var action = $(this).attr('data-action');
-        var token =  $(this).attr('data-token');
-        var id =  $(this).attr('data-id');
+// rating a book
+    $(document).on('click', '.star1', function(){
+        var point = $('input[name=rating]:checked').val();
+        var bookId = $('.rating').attr('data-id');
+        var url = $('.rating').attr('data-url');
+        var type = $('.rating').attr('data-type');
+        var token = $('.rating').attr('data-token');
+        var userId = $('.rating').attr('data-userId');
         $.ajax({
             url : url,
-            type :"PUT",
-            data: {_token:token, action:action, bookId:bookId, url:url, userId:userId, commentId:id},
-            success:function(data){
-                alert(1);
-                console.log(data);
+            type : 'PUT',
+            data : {_token:token, type:type, userId:userId,point:point, bookId:bookId},
+            success : function(data){
+                $('.rating .star1').each(function(){
+                    if(Math.ceil(data) == $(this).val()){
+                        $(this).prop('checked',true);
+                    };
+                });
             }
         });
     });

@@ -104,34 +104,43 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::findOrFail($id);
-        $validate =[
-            'name' => 'required',
-            'parent' => 'required',
-            'author' => 'required',
-            'description' => 'required',
-            'public_date' => 'date|required|',
-            'image' => 'image|max:2000',
-            'number_of_page' => 'required',
-        ];
-        $this->validate($request, $validate);
+        if ($request->ajax()) {
+            $vote = Book::findOrFail($id);
+            $oldPoint = $vote->rate*$vote->countvote;
+            $vote->countvote = $vote->countvote + 1;
+            $vote->rate = ($oldPoint + $request->point) / $vote->countvote;
+            $vote->update();
+            return $vote->rate;
+        } else {
+            $book = Book::findOrFail($id);
+            $validate =[
+                'name' => 'required',
+                'parent' => 'required',
+                'author' => 'required',
+                'description' => 'required',
+                'public_date' => 'date|required|',
+                'image' => 'image|max:2000',
+                'number_of_page' => 'required',
+            ];
+            $this->validate($request, $validate);
 
-        $publicDate = date('Y-m-d', strtotime($request->public_date));
+            $publicDate = date('Y-m-d', strtotime($request->public_date));
 
-        $book->name = $request->name;
-        $book->category_id = $request->parent;
-        $book->public_date = $publicDate;
-        $book->author = $request->author;
-        $file = $request->file('image');
-        if ($file != null) {
-            File::delete('../storage/app/book/' . $book->img);
-            $book->description = $request->description;
+            $book->name = $request->name;
+            $book->category_id = $request->parent;
+            $book->public_date = $publicDate;
+            $book->author = $request->author;
             $file = $request->file('image');
-            $book->img = time() . '.' . $file->extension();
-            $this->uploadImage($request);
+            if ($file != null) {
+                File::delete('../storage/app/book/' . $book->img);
+                $book->description = $request->description;
+                $file = $request->file('image');
+                $book->img = time() . '.' . $file->extension();
+                $this->uploadImage($request);
+            }
+            $book->update();
+            return redirect('book')->with('status', $request->name . ' Edited Successfully !!!');
         }
-        $book->update();
-        return redirect('book')->with('status', $request->name . ' Edited Successfully !!!');
     }
 
     /**

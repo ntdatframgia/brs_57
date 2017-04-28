@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserActivityToComment extends Migration
+class AddToUserId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserActivityToComment extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->integer('like_user_id')->nullable();
+        Schema::table('books', function (Blueprint $table) {
+            $table->integer('user_id')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserActivityToComment extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->integer('like_user_id')->nullable();
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropColumn('user_id');
         });
     }
 }

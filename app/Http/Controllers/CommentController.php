@@ -81,7 +81,7 @@ class CommentController extends Controller
         if ($request->ajax()) {
             if ($request->action == 'like') {
                 $update = Comment::where([['user_id', $request->userId], ['book_id', $request->bookId], ['id', $request->commentId]])->get()->first();
-                if (!$update->like_uses_id) {
+                if ($update->like_uses_id) {
                     $update->like = $update->like+1;
                 } else {
                     $update->like = $update->like-1;

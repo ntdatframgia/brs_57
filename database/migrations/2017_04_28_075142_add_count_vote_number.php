@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToComment extends Migration
+class AddCountVoteNumber extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserIdToComment extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->integer('like')->nullable();
+        Schema::table('books', function (Blueprint $table) {
+            $table->integer('countvote')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserIdToComment extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->integer('like')->nullable();
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropColumn('countvote');
         });
     }
 }

@@ -40,9 +40,9 @@
                     </span><!-- /.username -->
                     @if(Auth::user()->id == $cm->user_id || Auth::user()->role == 1)
                         <a href="javascript:void(0)"><i data-id="{{ $cm->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('comment.destroy',$cm->id)}}" class="deleteComment fa fa-times fa-1 pull-right"></i></a>
-                        <a href="javascript:void(0)"><i data-id="{{ $cm->id }}" class="editcomment fa fa-pencil-square-o fa-1 pull-right" ></i></a>
+                        <a href="javascript:void(0)"><i data-id="{{ $cm->id }}"  data-token="{{ csrf_token() }}" class="editcomment fa fa-pencil-square-o fa-1 pull-right" ></i></a>
                     @endif
-                    <p data-id="{{$cm->id}}" class="commentText">{{ $cm->comment }} </p>
+                    <p data-id="{{$cm->id}}" data-userId ="{{ Auth::user()->id }}"  class="commentText">{{ $cm->comment }}  <br/><button data-id="{{ $cm->id }}" data-action="like" type="button" data-bookId=" {{$book->id}} " data-userId ="{{ Auth::user()->id }}" class="like btn btn-default btn-xs" data-token="{{ csrf_token() }}" data-url="{{ route('comment.update',$cm->id) }}"><i class="fa fa-thumbs-o-up"></i> Like</button></p>
                     <textarea data-url="{{ route('comment.update',$cm->id) }}" data-token="{{ csrf_token() }}"  data-id="{{ $cm->id }}" class="form-control edit-comment-text hide" >{{ $cm->comment }} </textarea>
               </div>
         </div>

@@ -10,7 +10,7 @@ class Comment extends Model
         'comment',
         'user_id',
         'book_id',
-        'rate',
+        'like',
     ];
 
     public function user()

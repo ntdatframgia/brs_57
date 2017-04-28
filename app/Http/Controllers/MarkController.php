@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mark;
 use auth;
+use DB;
+use Response;
 
 class MarkController extends Controller
 {
     public function store(Request $request)
     {
         if ($request->ajax()) {
-            $mark = Mark::find($request->markId);
+            $mark = Mark::where([['user_id', $request->userId], ['book_id', $request->bookId]])->get()->first();
             if ($mark && Auth::user()->id == $mark->user_id && $request->bookId == $mark->book_id) {
                 if ($request->type == 2) {
                     if ($mark->read_status == $request->readStatus) {
@@ -20,7 +22,7 @@ class MarkController extends Controller
                         } elseif ($mark->read_status == 2) {
                             $mark->read_status = 1;
                         } else {
-                             $mark->read_status = config('custom.readStatus');
+                            $mark->read_status = config('custom.readStatus');
                         }
                     } else {
                         $mark->read_status = 1;
@@ -49,26 +51,22 @@ class MarkController extends Controller
                     }
                 }
                     $mark->update();
-                    return $mark;
+                    return response()->json($mark);
             } else {
                 $mark = new Mark;
-                if ($request->readStatus == null && $request->favoriteStatus == null) {
-                    $mark->favorite = config('custom.favoriteStatus');
+                $mark->user_id = Auth::user()->id;
+                $mark->book_id = $request->bookId;
+                if ($request->type == 1) {
+                    $mark->favorite = 1;
                     $mark->read_status = config('custom.readStatus');
-                } elseif ($request->readStatus == null && $request->favoriteStatus != null) {
-                    $mark->favorite = $request->favoriteStatus;
-                    $mark->read_status = config('custom.readStatus');
-                } elseif ($request->favoriteStatus == null && $request->readStatus != null) {
+                } elseif ($request->type ==2) {
+                    $mark->read_status = 1;
                     $mark->favorite = config('custom.favoriteStatus');
-                    $mark->read_status = $request->readStatus;
                 } else {
-                    $mark->read_status = $request->readStatus;
-                    $mark->favorite = $request->favoriteStatus;
+                    $mark->readStatus = 2;
                 }
-                    $mark->user_id = Auth::user()->id;
-                    $mark->book_id = $request->bookId;
-                    $mark->save();
-                    return $mark;
+                $mark->save();
+                return $mark;
             }
         }
     }

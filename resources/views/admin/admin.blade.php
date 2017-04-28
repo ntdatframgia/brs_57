@@ -250,6 +250,7 @@ Theme style
           <ul class="treeview-menu">
             <li><a href="{{ route('category.index')}}"><i class="fa fa-circle-o"></i> List Category</a></li>
             <li><a href="{{ route('category.index')}}"><i class="fa fa-circle-o"></i> Add Category</a></li>
+            <li><a href="{{ route('category.deleted')}}"><i class="fa fa-circle-o"></i> List Deleted Category</a></li>
           </ul>
         </li>
       </ul>

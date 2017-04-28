@@ -16,6 +16,10 @@ Auth::routes();
 
 Route::resource('user', 'UserController');
 
+Route::get('/category/deleted', ['as' => 'category.deleted', 'uses' => 'CategoryController@getdDeleted']);
+
+route::get('category/restore/{id}', ['as' => 'category.restore', 'uses' => 'CategoryController@restore']);
+
 Route::resource('category', 'CategoryController');
 
 Route::resource('book', 'BookController');

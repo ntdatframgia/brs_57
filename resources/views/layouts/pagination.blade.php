@@ -11,7 +11,7 @@
                 <a href="javascript:void(0)"><i data-id="{{ $comment->id }}" class="editcomment fa fa-pencil-square-o fa-1 pull-right" ></i></a>
               @endif
             <p data-id="{{ $comment->id }}" class="commentText">{{ $comment->comment }}
-            </p>
+            <br/><button type="button" data-id="{{ $comment->id }}" data-userId ="{{ Auth::user()->id }}"  data-token="{{ csrf_token() }}" class="btn btn-default btn-xs" data-url="{{ route('comment.update',$cm->id) }}" data-bookId=" {{$book->id}} " data-action="like"><i class=" like fa fa-thumbs-o-up"></i> Like</button></p>
             <textarea data-url={{ route('comment.update',$comment->id)}} data-token='{{csrf_token()}}' data-mehtod="PUT" data-id="{{ $comment->id }}" class="form-control edit-comment-text hide">{{ $comment->comment }}</textarea>
       </div>
       <!-- /.comment-text -->

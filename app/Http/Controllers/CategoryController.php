@@ -129,4 +129,21 @@ class CategoryController extends Controller
             return back()->with(['status' => 'Cannot delete this category', 'flag' => 'alert-warning']);
         }
     }
+
+    public function getdDeleted()
+    {
+        $deleteted = Category::where('deleted_at', '<>', null)->get();
+        return view('admin.category.deleted', ['items' => $deleteted]);
+    }
+
+    public function restore($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->deleted_at = null;
+        $category->update();
+        return redirect('/category/deleted')->with([
+            'status' => $category->name . ' Restored Successfully !!!',
+            'flag' => ' alert-success',
+            ]);
+    }
 }

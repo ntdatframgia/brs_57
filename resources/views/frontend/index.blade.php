@@ -47,7 +47,7 @@
                  data-user="{{ Auth::user()->id }}" data-url="{{ route('mark.store') }}"
                   data-token={{ csrf_token() }} class="markItem btn btn-box"
                    data-toggle="tooltip" title="" data-original-title="Mark as readed">
-                  <i data-lol="1" data-id = {{ $book->id }} class="fa fa-flag @if ( $book->mark['read_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i></span>
+                  <i  data-id = {{ $book->id }} class="fa fa-flag @if ( $book->mark['read_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i></span>
             </ul>
        </div>
     </div>

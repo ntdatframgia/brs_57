@@ -130,18 +130,34 @@ $( document ).ready(function() {
                     $('.fa-star[data-id="' + bookId + '"]').addClass('favoriteStatus');
                 }
                 if (data.read_status == 0) {
-                    alert(data.read_status);
                     $('.fa-flag-checkered[data-id="' + bookId + '"]').removeClass('readStatus');
                     $('.fa-flag[data-id="' + bookId + '"]').removeClass('readStatus');
                 }  if (data.read_status == 1) {
-                     alert(data.read_status);
                     $('.fa-flag-checkered[data-id="' + bookId + '"]').addClass('readStatus');
                     $('.fa-flag[data-id="' + bookId + '"]').removeClass('readStatus');
                 } if (data.read_status == 2){
-                     alert(data.read_status);
                     $('.fa-flag-checkered[data-id="' + bookId + '"]').removeClass('readStatus');
                     $('.fa-flag[data-id="' + bookId + '"]').addClass('readStatus');
                 }
+            }
+        });
+    });
+    // like a comment
+    $(document).on('click', '.like' ,function(){
+        var userId = $(this).attr('data-userId');
+        alert(userId);
+        var bookId = $(this).attr('data-bookId');
+        var url = $(this).attr('data-url');
+        var action = $(this).attr('data-action');
+        var token =  $(this).attr('data-token');
+        var id =  $(this).attr('data-id');
+        $.ajax({
+            url : url,
+            type :"PUT",
+            data: {_token:token, action:action, bookId:bookId, url:url, userId:userId, commentId:id},
+            success:function(data){
+                alert(1);
+                console.log(data);
             }
         });
     });

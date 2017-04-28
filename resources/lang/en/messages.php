@@ -42,4 +42,6 @@ return [
     'public_date' => 'Public Date',
     'category' => 'Category',
     'description' => 'Description',
+    'restore' => 'Restore',
+    'deleted_at' => 'Deleted_At',
 ];

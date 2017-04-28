@@ -145,7 +145,6 @@ $( document ).ready(function() {
     // like a comment
     $(document).on('click', '.like' ,function(){
         var userId = $(this).attr('data-userId');
-        alert(userId);
         var bookId = $(this).attr('data-bookId');
         var url = $(this).attr('data-url');
         var action = $(this).attr('data-action');

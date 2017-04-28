@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('category')->get();
         $mark = Mark::Where('user_id', Auth::user()->id)->get();
         return view('frontend.index', ['books' => $books, 'mark' => $mark]);
     }

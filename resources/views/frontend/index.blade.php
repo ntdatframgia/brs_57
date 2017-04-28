@@ -14,7 +14,7 @@
           <ul class="list-inline list-unstyled">
             <li><span><i class="fa fa-calendar-check-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d', $book->public_date)->format('d M Y')  }} </span></li>
             <li>|</li>
-            category
+            {{ $book->category['name'] }}
            <!--  <span><i class="fa fa-link"></i> </span> -->
             <li>|</li>
             <li>
@@ -27,7 +27,8 @@
                  data-markid="{{ $book->mark['id'] }}" data-bookId="{{ $book->id }}"
                  data-user="{{ Auth::user()->id }}" data-url="{{ route('mark.store') }}"
                  data-token={{ csrf_token() }} class="markItem btn btn-box " data-toggle="tooltip" title="" data-original-title="Mark as favorite">
-                  <i data-id="{{ $book->id }}" class=" @if ( $book->mark['favorite'] == 1 && Auth::user()->id == $book->mark['user_id']) {{ "favoriteStatus" }} @endif  fa fa-star"></i></span>
+
+                  <i data-id="{{ $book->id }}" class=" @if ( $book->mark['favorite'] == 1 && Auth::user()->id == $book->mark->user_id) {{ "favoriteStatus" }} @endif  fa fa-star"></i></span>
             </li>
             <li>|</li>
             <li>
@@ -47,7 +48,7 @@
                  data-user="{{ Auth::user()->id }}" data-url="{{ route('mark.store') }}"
                   data-token={{ csrf_token() }} class="markItem btn btn-box"
                    data-toggle="tooltip" title="" data-original-title="Mark as readed">
-                  <i  data-id = {{ $book->id }} class="fa fa-flag @if ( $book->mark['read_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i></span>
+                  <i  data-id = {{ $book->id }} class="fa fa-flag @if ( $book->mark['ready_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i></span>
             </ul>
        </div>
     </div>

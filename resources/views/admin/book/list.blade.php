@@ -37,7 +37,7 @@
           <td> {{ $book->author }} </td>
           <td> {{ str_limit($book->description, $limit = 100, $end = '...') }} </td>
           <td> {{ $book->number_of_page }}</td>
-          <td> {{ $book->category->name }} </td>
+          <td> {{ $book->category['name'] }} </td>
           <td> {{ $book->public_date }} </td>
           <td><a href="{{ route("book.edit",$book->id)}}" ><button class="btn btn-link" ><i class="editu fa fa-edit"></i></button></a> </td>
           <td>   {{ Form::open(array('url' => 'book/' . $book->id, )) }}

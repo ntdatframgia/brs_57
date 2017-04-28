@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
@@ -15,6 +16,8 @@ class Book extends Model
         'rate',
         'img',
     ];
+
+
 
     protected $dateFormat = 'Y-m-d';
 
@@ -38,8 +41,18 @@ class Book extends Model
         return $this->comments()->count();
     }
 
+    public function marks()
+    {
+        return $this->hasMany(Mark::Class);
+    }
+
+    public function myMark()
+    {
+        return $this->marks()->where('user_id', Auth::user()->id);
+    }
+
     public function mark()
     {
-        return $this->hasOne(Mark::Class);
+        return $this->hasOne(Mark::Class)->where('user_id', Auth::user()->id);
     }
 }

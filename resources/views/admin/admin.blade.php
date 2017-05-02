@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Blank Page</title>
+  <title>Share Book </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -31,17 +31,17 @@ Theme style
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" style="margin:0">
 <!-- Site wrapper -->
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="{{ route('home.index')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini">B.S</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg">Book Share</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -69,7 +69,7 @@ Theme style
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="{{ asset(Auth::user()->path_avatar) }}" class="img-circle" alt="User Image">
+                        <img href="{{ route('home.profile',Auth::user()->id ) }}" src="{{ asset(Auth::user()->path_avatar) }}" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -140,13 +140,13 @@ Theme style
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="user-image" alt="User Image">
+              <img href="{{ route('home.profile',Auth::user()->id ) }}" src="{{ asset(Auth::user()->path_avatar) }}" class="user-image" alt="User Image">
               <span class="hidden-xs"> {{ Auth::user()->fullname }} </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="img-circle" alt="User Image">
+                <img href="{{ route('home.profile',Auth::user()->id ) }}" src="{{ asset(Auth::user()->path_avatar) }}" class="img-circle" alt="User Image">
               </li>
               <!-- Menu Body -->
               <li class="user-body">
@@ -166,7 +166,7 @@ Theme style
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">@lang('messages.Profile')</a>
+                  <a href="#" class="btn btn-default btn-flat">@lang('messages.profile')</a>
                 </div>
                 <div class="pull-right">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -195,23 +195,13 @@ Theme style
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="img-circle" alt="User Image">
+          <img  src="{{ asset( Auth::user()->path_avatar) }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p> {{ Auth::user()->fullname }} </p>
+          <p><a href= "{{ route('home.profile',Auth::user()->id ) }}"> {{ Auth::user()->fullname }} </a></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">

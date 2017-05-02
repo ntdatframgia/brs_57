@@ -155,11 +155,51 @@ $( document ).ready(function() {
             type : 'PUT',
             data : {_token:token, type:type, userId:userId,point:point, bookId:bookId},
             success : function(data){
-                $('.rating .star1').each(function(){
-                    if(Math.ceil(data) == $(this).val()){
-                        $(this).prop('checked',true);
-                    };
-                });
+                console.log(data);
+                if(data == 'false'){
+                    alert('You voted this book')
+                } else {
+                    $('.rating .star1').each(function(){
+                        if(Math.ceil(data.rate) == $(this).val()){
+                            $(this).prop('checked',true);
+                        };
+                    });
+                    rate = parseFloat(data.rate);
+                    point = Math.round(rate * 1000)/1000;
+                    $('#totalPoint').hide();
+                    $('#totalPoint1').append('<p id="totalPoint">Point: ' + point +'/ 10 - ' + data.countvote + ' Vote</p>');
+                }
+            }
+        });
+    });
+    // follow user
+    $(document).on('click', '#follow', function(){
+        var follower = $(this).attr('data-follower');
+        var token = $(this).attr('data-token');
+        var userId = $(this).attr('data-id');
+        var url = $(this).attr('data-url');
+        $.ajax({
+            url : url,
+            type : "POST",
+            data : {follower:follower, userId:userId,_token:token},
+            success: function(data) {
+
+                if(data == 'Following') {
+                    var countFollower = parseInt($('.followers').text());
+                    countFollower = parseInt(countFollower + 1);
+                    $('.followers').text(countFollower);
+                    $('#follow b').text(data);
+                    $('#follow').removeClass('btn btn-primary')
+                    $('#follow').addClass('btn btn-success');
+                } else {
+                    var countFollower = parseInt($('.followers').text());
+                    parseInt(countFollower);
+                    countFollower = parseInt(countFollower - 1);
+                    $('.followers').text(countFollower);
+                    $('#follow b').text(data);
+                    $('#follow').removeClass('btn btn-success')
+                    $('#follow').addClass('btn btn-primary');
+                }
             }
         });
     });

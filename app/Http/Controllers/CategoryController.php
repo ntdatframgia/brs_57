@@ -19,6 +19,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+
         return view('admin.category.list', ['categories' => $categories]);
     }
 
@@ -132,15 +133,15 @@ class CategoryController extends Controller
 
     public function getdDeleted()
     {
-        $deleteted = Category::where('deleted_at', '<>', null)->get();
-        return view('admin.category.deleted', ['items' => $deleteted]);
+        $softDelete = Category::withTrashed()->get();
+        //$deleteted = Category::where('deleted_at', '<>', null)->get();
+        return view('admin.category.deleted', ['items' => $softDelete]);
     }
 
     public function restore($id)
     {
-        $category = Category::findOrFail($id);
-        $category->deleted_at = null;
-        $category->update();
+        $category = Category::withTrashed()->where('id',$id)->get()->first();
+        $category->restore();
         return redirect('/category/deleted')->with([
             'status' => $category->name . ' Restored Successfully !!!',
             'flag' => ' alert-success',

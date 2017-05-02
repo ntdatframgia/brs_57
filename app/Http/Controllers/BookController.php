@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Book;
 use File;
+use App\Models\Vote;
 
 class BookController extends Controller
 {
@@ -20,7 +21,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = Book::paginate(5);
         return view('admin.book.list', ['books' => $books]);
     }
 
@@ -68,7 +69,7 @@ class BookController extends Controller
         $book->img = time() . '.' . $file->extension();
         $this->uploadImage($request);
         $book->save();
-        return redirect('users')->with('status', $request->name . ' Added Successfully !!!');
+        return redirect('book')->with('status', $request->name . ' Added Successfully !!!');
     }
 
     /**
@@ -105,12 +106,24 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
-            $vote = Book::findOrFail($id);
-            $oldPoint = $vote->rate*$vote->countvote;
-            $vote->countvote = $vote->countvote + 1;
-            $vote->rate = ($oldPoint + $request->point) / $vote->countvote;
-            $vote->update();
-            return $vote->rate;
+            $checkVote = Vote::select('user_id')->where([
+                ['user_id', '=', $request->userId],
+                ['book_id', '=', $id],
+                ])->get()->toArray();
+            if (!$checkVote) {
+                $vote = Book::findOrFail($id);
+                $oldPoint = $vote->rate*$vote->countvote;
+                $vote->countvote = $vote->countvote + 1;
+                $vote->rate = ($oldPoint + $request->point) / $vote->countvote;
+                $vote->update();
+                $insert = new Vote;
+                $insert->user_id = $request->userId;
+                $insert->book_id = $id;
+                $insert->save();
+                return $vote;
+            } else {
+                return 'false';
+            }
         } else {
             $book = Book::findOrFail($id);
             $validate =[

@@ -25,6 +25,6 @@ class Mark extends Model
 
     public function activities()
     {
-        return $this->morphMany(Activity::class, 'activitytable');
+        return $this->morphMany(Activity::class, 'activityable');
     }
 }

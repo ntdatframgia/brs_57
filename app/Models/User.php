@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use auth;
 
 class User extends Authenticatable
 {
@@ -34,13 +35,14 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->hasMany(Activity::Class);
+        return $this->hasMany(Activity::class,'user_id');
     }
 
     public function marks()
     {
         return $this->hasMany(Mark::class);
     }
+
 
     public function comments()
     {

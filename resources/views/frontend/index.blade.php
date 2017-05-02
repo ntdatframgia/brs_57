@@ -1,11 +1,11 @@
-@extends('admin.admin')
+@extends('frontend.master')
 @section('content')
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 @foreach ($books as $book)
   <div class="well">
       <div class="media">
         <a class="pull-left" href="{{ route('home.detail',$book->id) }}">
-            <img class="media-object bookimage" src="{{ asset($book->path_book_image) }}">
+            <img class="media-object bookimage" src="{{ asset($book->img) }}">
         </a>
         <div class="media-body">
             <h4 class="media-heading"><a href="{{ route('home.detail',$book->id) }}" >{{ $book->name }}</a></h4>
@@ -51,9 +51,14 @@
                   data-token={{ csrf_token() }} class="markItem btn btn-box"
                    data-toggle="tooltip" title="" data-original-title="Mark as readed">
                   <i  data-id = {{ $book->id }} class="fa fa-flag @if ( $book->mark['read_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i></span>
+              </li>
+            <li>|</li>
+              <span>Rate: {{ $book->rate}} <i class="fa fa-star-o" data-toggle="tooltip" style="color:gold" aria-hidden="true"></i></span>
+            <li>
             </ul>
        </div>
     </div>
   </div>
 @endforeach
+{{$books->links()}}
 @endsection

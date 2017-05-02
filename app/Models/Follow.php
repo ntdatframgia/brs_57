@@ -11,18 +11,19 @@ class Follow extends Model
         'follow_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+        /**
+         * The attributes that should be mutated to dates.
+         *
+         * @var array
+         */
 
-    public function follow()
+    public function users()
     {
-        return $this->belongsTo(User::class, 'follow_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function activities()
     {
-        return $this->morphMany(Activity::class, 'activitytable');
+        return $this->morphMany(Activity::class, 'activityable');
     }
 }

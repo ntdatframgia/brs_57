@@ -34,14 +34,16 @@
           <td> {{ $user->fullname }} </td>
           <td> {{ $user->created_at->diffForHumans() }} </td>
           <td><a href="{{ route("user.edit",$user->id)}}" ><button class="btn btn-link" ><i class="editu fa fa-edit"></i></button></a> </td>
-          <td>   {{ Form::open(array('url' => 'user/' . $user->id, )) }}
-                    {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::button('<i class="deleteu fa fa-times"></i>', array('type' =>'submit','onclick' => 'return confirm("Do you want to delete ?")', 'class' => ' deleteu btn-link')) }}
-                {{ Form::close() }}
-
+          <td>  @if($user->id != Auth::user()->id)
+                    {{ Form::open(array('url' => 'user/' . $user->id, )) }}
+                        {{ Form::hidden('_method', 'DELETE') }}
+                        {{ Form::button('<i class="deleteu fa fa-times"></i>', array('type' =>'submit','onclick' => 'return confirm("Do you want to delete ?")', 'class' => ' deleteu btn-link')) }}
+                    {{ Form::close() }}
+                @endif
           </td>
         </tr>
         @endforeach
-      </tbody></table>
+        </tbody></table>
+       {{ $users->links() }}
     </div>
 @endsection

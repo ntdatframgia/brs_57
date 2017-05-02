@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use File;
 use Hash;
 use Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\Comment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    use SoftDeletes;
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(5);
 
         return view('admin.user.list', ['users' => $users]);
     }
@@ -62,7 +65,7 @@ class UserController extends Controller
         $newuser->role = config('custom.role');
         $this->uploadavatar($request);
         $newuser->save();
-        return redirect('users')->with('status', $request->email . ' Created Successfully !!!');
+        return redirect('user')->with('status', $request->email . ' Created Successfully !!!');
     }
 
 
@@ -122,7 +125,7 @@ class UserController extends Controller
             $user->avatar = time() . '.' . $file->extension();
         }
         $user->update();
-        return redirect('/users')->with('status', $user->email . ' profile updated');
+        return redirect('/user')->with('status', $user->email . ' profile updated');
     }
 
 
@@ -140,8 +143,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $listComment = Comment::select('id')->where('user_id', $id)->get()->toArray();
+        foreach ($listComment as $value) {
+           Comment::destroy($value);
+        }
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect('users/')->with('status', $user->email . 'Deleted Successfully!!!');
+        return redirect('user/')->with('status', $user->email . 'Deleted Successfully!!!');
     }
 }

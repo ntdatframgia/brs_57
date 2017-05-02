@@ -1,32 +1,23 @@
-@extends('admin.admin')
+@extends('frontend.master')
 @section('content')
   <!-- Box Comment -->
   <div class="box box-widget">
     <div class="box-header with-border">
-      <div class="box-tools">
-        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-          <i class="fa fa-circle-o"></i></button>
-      </div>
       <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
     <div class="box-body">
     <h1 class="text-center">{{ $book->name}}</h1>
-      <img class="img-responsive center-block" src="{{ asset($book->path_book_image)}}" alt="Photo">
+      <img class="img-responsive center-block" src="{{ asset($book->img)}}" alt="Photo"></br>
 
       <p>{{ $book->description }}</p>
         <h1>Rate for book</h1>
-        <fieldset class="rating" @if ($book->user_id == Auth::user()->id) {{ 'disabled="disable"' }} @endif data-id="{{ $book->id}}" data-url="{{ route('book.update',$book->id)}}" data-userId={{ Auth::user()->id }} data-token ="{{ csrf_token() }}" data-type ="vote">
-            <input class="star1" type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-            <input class="star1" type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-            <input class="star1" type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-            <input class="star1" type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-            <input class="star1" type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-            <input class="star1" type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-            <input class="star1" type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-            <input class="star1" type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-            <input class="star1" type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-            <input class="star1" type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+        <fieldset class="rating"  data-id="{{ $book->id}}" data-url="{{ route('book.update',$book->id)}}" data-userId={{ Auth::user()->id }} data-token ="{{ csrf_token() }}" data-type ="vote">
+        @for($i =10; $i > 0; $i--)
+            <input class="star1" type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" @if (ceil($book->rate) == $i)) {{"checked"}} @endif  /><label class = "full" for="star{{ $i }}" title=" {{$i}} stars"></label>
+        @endfor
+        <p id="totalPoint">Point: {{round($book->rate,1)}}/ 10 - {{$book->countvote}} Vote</p>
+        <p id="totalPoint1"></p>
         </fieldset>
         <span class="pull-right text-muted"> <span id="countItem" data-sum="{{ $comments->count() }}" >{{ $comments->count() }}</span>/{{ $comments->total() }} comments</span>
     </div>
@@ -36,10 +27,10 @@
 
         @foreach($comments as $cm)
           <div data-id={{ $cm->id }} class="box-comment">
-              <img class="img-circle img-sm" src="{{ asset($cm->user->path_avatar) }}" alt="User Image">
-              <div class="comment-text">
+               <a href="{{route('home.profile',$cm->user->id)}}" ><img class="img-circle img-sm" src="{{ asset($cm->user->path_avatar) }}" alt="User Image"></a>
+                <div class="comment-text">
                     <span class="username">
-                    {{ $cm->user->fullname }}
+                    <a href="{{route('home.profile',$cm->user->id)}}" >{{ $cm->user->fullname }} </a>
                       <span data-id="{{$cm->id}}" class="text-muted pull-right">
                         @if (@ $cm->updated_at != $cm->created_at)
                             {{  $cm->updated_at->diffForHumans() . " - Edited" }}

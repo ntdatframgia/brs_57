@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3">
           <div class="text-center">
-            <img src="{{asset($user->getPathAvatar())}}" class="avatar  width="200" height="200" img-circle" alt="avatar" >
+            <img src="{{asset($user->path_avatar)}}" class="avatar img-circle"  width="200" height="200"  alt="avatar" >
           </div>
         </div>
         <div class="col-md-7 personal-info">

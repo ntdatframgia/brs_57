@@ -14,7 +14,7 @@ class AddToUserId extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('user_id')->nullable();
+             $table->softDeletes();
         });
     }
 
@@ -26,7 +26,7 @@ class AddToUserId extends Migration
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('user_id');
+             $table->softDeletes();
         });
     }
 }

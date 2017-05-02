@@ -70,4 +70,11 @@ class MarkController extends Controller
             }
         }
     }
+    public function deleteReadding($id)
+    {
+        $mark  = Mark::findOrfail($id);
+        $mark->read_status = config('custom.readedStatus');
+        $mark->update();
+        return back()->with('status', ' Deleted Successfully!!!');
+    }
 }

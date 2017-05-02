@@ -1,9 +1,9 @@
 @foreach ($comments as $comment)
     <div class="box-comment">
-      <img class="img-circle img-sm" src="{{ asset($comment->user->path_avatar) }}" alt="User Image">
-      <div class="comment-text">
-            <span class="username">
-              {{ $comment->user->fullname }}
+      <a href="{{route('home.profile',$comment->user->id)}}" ><img class="img-circle img-sm" src="{{ asset($comment->user->path_avatar) }}" alt="User Image"></a>
+                <div class="comment-text">
+                    <span class="username">
+                    <a href="{{route('home.profile',$comment->user->id)}}" >{{ $comment->user->fullname }} </a>
               <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
             </span><!-- /.username -->
              @if(Auth::user()->id == $comment->user_id || Auth::user()->role == 1)

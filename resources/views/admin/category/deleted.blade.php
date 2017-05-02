@@ -24,11 +24,13 @@
                     <th> @lang('messages.restore') </th>
                 </tr>
                  @foreach ($items as $item)
-                <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->deleted_at}}</td>
-                    <td><a href="{{ route('category.restore',$item->id)}}"><i class="fa fa-upload" aria-hidden="true"></i></td>
-                </tr>
+                    @if($item->deleted_at)
+                        <tr>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->deleted_at}}</td>
+                            <td><a href="{{ route('category.restore',$item->id)}}"><i class="fa fa-upload" aria-hidden="true"></i></td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

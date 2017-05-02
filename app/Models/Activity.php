@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        'activitytable_id',
-        'activitytable_type',
+        'activityable_id',
+        'activityable_type',
         'user_id',
+        'action',
         'like_number',
     ];
 
@@ -18,8 +19,20 @@ class Activity extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function activitytable()
+    public function activityable()
     {
         return $this->morphTo();
+    }
+
+
+
+    public function store($data, $type, $action)
+    {
+        $logActivity = new Activity;
+        $logActivity->activityable_type = $type;
+        $logActivity->activityable_id = $data->id;
+        $logActivity->user_id = $data->user_id;
+        $logActivity->action = $action;
+        $logActivity->save();
     }
 }

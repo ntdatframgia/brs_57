@@ -17,11 +17,15 @@ class Book extends Model
         'img',
     ];
 
-    protected $dateFormat = 'Y-m-d';
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
     }
 
     public function comments()
@@ -29,14 +33,19 @@ class Book extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function getPathBookImageAttribute()
+    public function getImgAttribute($value)
     {
-        return config('custom.pathBookImage').$this->img;
+        return config('custom.pathBookImage').$value;
     }
 
     public function getCountCommentOfBookAttribute()
     {
         return $this->comments()->count();
+    }
+
+    public function marks()
+    {
+        return $this->hasMany(Mark::class);
     }
 
     public function mark()

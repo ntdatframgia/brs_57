@@ -17,7 +17,7 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('activitytable_id');
-            $table->char('activitytablce_type');
+            $table->char('activitytable_type');
             $table->integer('user_id');
             $table->integer('like_number');
             $table->timestamps();

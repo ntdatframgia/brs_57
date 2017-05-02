@@ -55,7 +55,8 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $comments = Comment::where('book_id', $id)->paginate(5);
+        return view('admin.comment.listById', ['comments' => $comments]);
     }
 
     /**
@@ -113,6 +114,10 @@ class CommentController extends Controller
             $comment = Comment::findOrFail($id);
             $comment->delete();
             return 'succsess';
+        } else {
+            $comment = Comment::findOrFail($id);
+            $comment->delete();
+            return back()->with('status', 'Deleted Succsessfully !!!');
         }
     }
 }

@@ -1,13 +1,5 @@
 {
-  "/js/app.js": "/js/app.js",
-  "/css/app.css": "/css/app.css",
-  "/js/bootstrap.js": "/js/bootstrap.js",
-  "/plugins/jQuery/jquery-2.2.3.min.js": "/plugins/jQuery/jquery-2.2.3.min.js",
-  "/plugins/slimScroll/jquery.slimscroll.min.js": "/plugins/slimScroll/jquery.slimscroll.min.js",
-  "/plugins/fastclick/fastclick.js": "/plugins/fastclick/fastclick.js",
-  "/dist/js/app.min.js": "/dist/js/app.min.js",
-  "/bootstrap/js/bootstrap.min.js": "/bootstrap/js/bootstrap.min.js",
-  "/bootstrap/css/bootstrap.min.css": "/bootstrap/css/bootstrap.min.css",
-  "/dist/css/AdminLTE.min.css": "/dist/css/AdminLTE.min.css",
-  "/dist/css/skins/_all-skins.min.css": "/dist/css/skins/_all-skins.min.css"
+  "/mix.js": "/mix.js",
+  "/css/all.css": "/css/all.css",
+  "/js/all.js": "/js/all.js"
 }

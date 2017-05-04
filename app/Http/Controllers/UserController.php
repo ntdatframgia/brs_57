@@ -8,15 +8,14 @@ use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Comment;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    use SoftDeletes;
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('adminRole');
     }
 
    /**
@@ -120,7 +119,7 @@ class UserController extends Controller
         }
 
         if ($file != null) {
-            File::delete($this->getPathAvatar());
+            File::delete($user->img);
             $this->uploadavatar($request);
             $user->avatar = time() . '.' . $file->extension();
         }

@@ -47,7 +47,7 @@ return [
     'list_readding_book' => 'List Reading Book',
     'readed' => 'Readed',
     'request_new_book' => 'Request New Book',
-    'list_request' => 'Request List Request',
+    'list_request' => 'List Request',
     'stt' => 'Stt',
     'cancel' => 'Cancel',
     'list_comment' => 'List Comment',
@@ -55,4 +55,6 @@ return [
     'user' => 'User',
     'list_comment' => 'List Comment',
     'updated_at' => 'Updated At',
+    'from_email' => 'From Email',
+    'sent_request' => 'Send Request',
 ];

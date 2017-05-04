@@ -92,45 +92,35 @@
                       <!-- /.timeline-label -->
 
                     @foreach ($activities as $activity)
-
                       <!-- timeline item -->
+                      @if ($activity->activityable_type == "Mark" && $activity->activityable['favorite'] == 1)
                       <li>
-                    @if ($activity->activityable_type == "Mark")
-                        <i class="fa fa-bookmark bg-blue"></i>
-                    @elseif($activity->activityable_type == "Follow")
-                        <i class="fa fa-user bg-aqua"></i>
-                    @else
-                        <i class="fa fa-comment bg-green"></i>
-                    @endif
-
+                          <i class="fa fa-bookmark bg-blue"></i>
+                      @elseif($activity->activityable_type == "Follow" && $activity->activityable['follow_id'] )
+                      <li>
+                          <i class="fa fa-user bg-aqua"></i>
+                      @elseif($activity->activityable_type == "Comment")
+                      <li>
+                          <i class="fa fa-comment bg-green"></i>
+                      @endif
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i>  {{ \Carbon\Carbon::createFromTimeStamp(strtotime( $activity->activityable['updated_at']))->diffForHumans()  }}</span>
                             @if($activity->activityable_type == "Mark" && $activity->activityable['favorite'] == 1)
-                            <h3 class="timeline-header"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  marked <a href="{{ route('home.detail',$activity->activityable['book_id']) }}" >{{App\Models\Book::find($activity->activityable['book_id'])->name}}</a> as favorite
+                              <span class="time"><i class="fa fa-clock-o"></i>  {{ \Carbon\Carbon::createFromTimeStamp(strtotime( $activity->activityable['updated_at']))->diffForHumans()  }}</span>
+                              <h3 class="timeline-header no-border"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  marked <a href="{{ route('home.detail',$activity->activityable['book_id']) }}" >{{App\Models\Book::find($activity->activityable['book_id'])->name}}</a> as favorite</h3>
                             @elseif($activity->activityable_type == "Follow" && $activity->activityable['follow_id'])
-                            <h3 class="timeline-header"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  following
-                            <a href="{{ route('home.profile',$activity->activityable['follow_id']) }}">{{App\Models\User::find($activity->activityable['follow_id'])->fullname}}</a>
+                            <span class="time"><i class="fa fa-clock-o"></i>  {{ \Carbon\Carbon::createFromTimeStamp(strtotime( $activity->activityable['updated_at']))->diffForHumans()  }}</span>
+                            <h3 class="timeline-header no-border"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  following
+                            <a href="{{ route('home.profile',$activity->activityable['follow_id']) }}">{{App\Models\User::find($activity->activityable['follow_id'])->fullname}}</a></h3>
                             @elseif($activity->activityable_type == "Comment")
-                             <h3 class="timeline-header"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  Commented to a <a href="{{ route('home.detail',$activity->activityable['book_id']) }}" />{{App\Models\Book::find($activity->activityable['book_id'])->name}}
-                            @else
+                            <span class="time"><i class="fa fa-clock-o"></i>  {{ \Carbon\Carbon::createFromTimeStamp(strtotime( $activity->activityable['updated_at']))->diffForHumans()  }}</span>
+                            <h3 class="timeline-header no-border"><a href="{{ route('home.profile',$activity->user->id) }}/{{str_slug(Auth()->user()->fullname)}}.html">{{ $activity->user->fullname}}</a>  Commented to a post <a href="{{ route('home.detail',$activity->activityable['book_id']) }}" >{{App\Models\Book::find($activity->activityable['book_id'])->name}}</a></h3>
                             @endif
-                            </h3>
-                       <!--    <div class="timeline-body">
-                         Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                         weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                         jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                         quora plaxo ideeli hulu weebly balihoo...
-                       </div> -->
-                          <div class="timeline-footer">
-                            <a class="btn btn-primary btn-xs">Read more</a>
-                            <a class="btn btn-danger btn-xs">Delete</a>
-                          </div>
                         </div>
-                      </li>
-                      @endforeach
-                       <li>
-                            <i class="fa fa-clock-o bg-gray"></i>
                         </li>
+                      @endforeach
+                          <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                          </li>
                     </ul>
                       <!-- END timeline item -->
                         </div>
@@ -169,7 +159,7 @@
                             <tbody>
                             @foreach ($followers as $follower)
                             <tr>
-                                <td>
+                                <td style="position: relative;">
                                     <div class="col-lg-6">
                                         <img src="{{ asset($follower->path_avatar) }}" class="profile-user-img img-responsive img-circle" style="">
                                     </div>

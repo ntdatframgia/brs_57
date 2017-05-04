@@ -14,11 +14,7 @@
           <ul class="list-inline list-unstyled">
             <li><span><i class="fa fa-calendar-check-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d', $book->public_date)->format('d M Y')  }} </span></li>
             <li>|</li>
-            @if($book->category->deleted_at)
-              {{ "category" }}
-            @else
-              <i class='fa fa-fw fa-tag'></i>{{ $book->category->name }}
-            @endif
+              {{ $book->category()->withTrashed()->get()->first()->name }}
             <li>|</li>
             <li>
             <span><i class="fa fa-comments"></i> {{ $book->count_comment_of_book }} comments</span>

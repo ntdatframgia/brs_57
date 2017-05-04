@@ -98,7 +98,6 @@ class CommentController extends Controller
                     'updated_at' => $update->updated_at->diffForHumans(),
                 ]);
             }
-
         }
     }
 

@@ -14,7 +14,9 @@ class RequestBookController extends Controller
      */
     public function index()
     {
-        //
+        $this->middleware('adminRole');
+        $requests = requestBook::paginate(5);
+        return view('admin.request.list', ['requests' => $requests]);
     }
 
     /**

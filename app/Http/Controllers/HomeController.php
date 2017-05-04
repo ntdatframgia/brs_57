@@ -10,6 +10,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Activity;
 use DB;
+
 class HomeController extends Controller
 {
     /**
@@ -29,7 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(2);
+        $books = Book::paginate(4);
         $mark = Mark::Where('user_id', Auth::user()->id)->get();
         return view('frontend.index', ['books' => $books, 'mark' => $mark]);
     }
@@ -37,7 +38,7 @@ class HomeController extends Controller
     public function detailBook(Request $request, $id)
     {
         $book = Book::findOrFail($id);
-        $comments = Comment::where('book_id', $id)->orderBy('created_at', 'desc')->paginate(10);
+        $comments = Comment::where('book_id', $id)->orderBy('created_at', 'desc')->paginate(3);
         if ($request->ajax()) {
             return response()->json([
                 'current_page' => $comments->currentPage(),
@@ -88,14 +89,15 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $keyWork = '%'.$request->keywork.'%';
-        $rate = $request->keywork;
+        $key = $request->keywork;
+        $new = str_replace('%', '[%]', $key);
+        $keyWork = '%'.$new.'%';
         $result = Book::join('categories', 'books.category_id', '=', 'categories.id')
-                 ->select('books.id', 'books.name', 'books.category_id', 'books.number_of_page', 'books.author', 'books.created_at', 'books.updated_at', 'books.public_date', 'books.description', 'books.img', 'books.rate', 'categories.name as category_name')
+                 ->select('books.id', 'books.name', 'books.category_id', 'books.author', 'books.created_at', 'books.updated_at', 'books.public_date', 'books.description', 'books.img', 'books.rate', 'categories.name as category_name')
                  ->orwhere('books.name', 'LIKE', $keyWork)
-                 ->orwhere('books.rate', '>=', $rate)
+                 ->orwhere('books.author', 'LIKE', $keyWork)
                  ->orwhere('categories.name', 'LIKE', $keyWork)
-                 ->paginate(2);
+                 ->get();
         $mark = Mark::Where('user_id', Auth::user()->id)->get();
         return view('frontend.search', ['books' => $result, 'mark' => $mark]);
     }

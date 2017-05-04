@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Book Share') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
     {{ Html::style('css/all.css') }}
@@ -36,7 +36,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/home/index') }}">
                         {{ config('app.name', 'Book Share') }}
                     </a>
                 </div>

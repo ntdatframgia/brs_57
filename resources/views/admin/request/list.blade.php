@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('admin.admin')
 @section('content')
     <div class="box-header">
       <h3 class="box-title">{{ trans('messages.list_request') }}</h3>
@@ -22,7 +22,8 @@
           <th>{{ trans('messages.book_name') }}</th>
           <th>{{ trans('messages.author') }}</th>
           <th>{{ trans('messages.public_date') }}</th>
-          <th>{{ trans('messages.cancel') }}</th>
+          <th>{{ trans('messages.created') }}</th>
+          <th>{{ trans('messages.from_email') }}</th>
         </tr>
         <?php $stt = 0; ?>
         @foreach ($requests as $request)
@@ -32,13 +33,11 @@
             <td>{{ $request->book_name }}</td>
             <td> {{ $request->author }} </td>
             <td> {{ $request->public_date }} </td>
-            <td> {{ Form::open(array('url' => 'request/' . $request->id, )) }}
-                 {{ Form::hidden('_method', 'DELETE') }}
-                 {{ Form::button('<i class="deleteu fa fa-times"></i>', array('type' =>'submit','onclick' => 'return confirm("Do you want to delete ?")', 'class' => ' deleteu btn-link')) }}
-                 {{ Form::close() }}
-          </td>
+            <td> {{ $request->created_at->diffForHumans() }} </td>
+            <td> {{ $request->user->email }} </td>
         </tr>
         @endforeach
       </tbody></table>
+      {{ $requests->links() }}
     </div>
 @endsection

@@ -42,16 +42,23 @@
             <li class=" user user-menu">
               <form class="navbar-form" role="search" action="{{ route('home.search') }}">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search books by title, category, rating, favorite " name="keywork">
+                  <input type="text" class="form-control" placeholder="title, category, author" name="keywork">
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
               </form>
             </li>
+           @if(Auth::user()->role == 1)
+          <li class=" user user-menu">
+                <a href="{{ route('user.index')}}" > Admin </a>
+          </li>
+          @endif
+
           <li class=" user user-menu">
                 <a href="{{ route('home.profile', Auth()->user()->id)}}/{{str_slug(Auth()->user()->fullname)}}.html"> Time Line</a>
           </li>
+
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -65,7 +72,7 @@
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">@lang('messages.profile')</a>
+                  <a href="{{ route('home.profile', Auth()->user()->id)}}/{{str_slug(Auth()->user()->fullname)}}.html" class="btn btn-default btn-flat">@lang('messages.profile')</a>
                 </div>
                 <div class="pull-right">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -105,7 +112,6 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li>
-
             <a href="{{ route('home.readding', Auth::user()->id)}}"><i class="fa fa-book"></i> List Readding Book</a></li>
         </li>
         <li class="treeview">
@@ -117,7 +123,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('request.create')}}"><i class="fa fa-circle-o"></i>Request New Book</a></li>
-            <li><a href="{{ route('request.show', auth()->user()->id)}}"><i class="fa fa-circle-o"></i> List Request</a></li>
+            <li><a href="{{ route('request.show', auth()->user()->id)}}"><i class="fa fa-circle-o"></i>List Request</a></li>
           </ul>
         </li>
       </ul>

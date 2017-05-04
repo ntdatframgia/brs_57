@@ -152,8 +152,8 @@ $( document ).ready(function() {
         var userId = $('.rating').attr('data-userId');
         $.ajax({
             url : url,
-            type : 'PUT',
-            data : {_token:token, type:type, userId:userId,point:point, bookId:bookId},
+            type : 'post',
+            data : {_token:token,_method:'PUT', type:type, userId:userId, point:point, bookId:bookId},
             success : function(data){
                 console.log(data);
                 if(data == 'false'){

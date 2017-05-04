@@ -52,7 +52,7 @@
                   </div>
                   <div class="form-group">
                       <div class="col-md-7 col-md-offset-4">
-                          {!! Form::submit(trans('messages.add_book'), ['class' => 'btn btn-primary']) !!}
+                          {!! Form::submit(trans('messages.sent_request'), ['class' => 'btn btn-primary']) !!}
                       </div>
                   </div>
                   {!! Form::close() !!}

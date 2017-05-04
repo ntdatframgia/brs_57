@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +37,7 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->hasMany(Activity::class,'user_id');
+        return $this->hasMany(Activity::class, 'user_id');
     }
 
     public function marks()

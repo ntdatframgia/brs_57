@@ -29,7 +29,7 @@
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">{{ trans('messages.toggle_navigation') }}</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -51,7 +51,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="{{ asset("../storage/app/avatar/$user->avatar") }}" class="img-circle" alt="User Image">
+                        <img src="{{ asset(Auth::user()->getPathAvatar()) }}" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -122,18 +122,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset("../storage/app/avatar/$user->avatar") }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="{{ asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="user-image" alt="User Image">
+              <span class="hidden-xs"> {{ Auth::user()->fullname }} </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset("../storage/app/avatar/$user->avatar") }}" class="img-circle" alt="User Image">
-
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
-                </p>
+                <img src="{{ asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="img-circle" alt="User Image">
               </li>
               <!-- Menu Body -->
               <li class="user-body">
@@ -142,7 +137,7 @@
                     <a href="#">Followers</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#">@</a>
                   </div>
                   <div class="col-xs-4 text-center">
                     <a href="#">Friends</a>
@@ -153,10 +148,13 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">@lang('messages.Profile')</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                  <input type="submit" class="btn btn-default btn-flat" value="@lang('messages.logout')">
+                      {{ csrf_field() }}
+                  </form>
                 </div>
               </li>
             </ul>
@@ -179,10 +177,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset("../storage/app/avatar/$user->avatar") }}" class="img-circle" alt="User Image">
+          <img src="{{asset("../storage/app/avatar/" . Auth::user()->avatar) }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p> {{ Auth::user()->fullname }} </p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>

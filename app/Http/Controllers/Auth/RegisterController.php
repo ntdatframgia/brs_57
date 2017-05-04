@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/users';
 
     /**
      * Create a new controller instance.
@@ -55,9 +55,6 @@ class RegisterController extends Controller
             'avatar' => 'required|image|max:2000',
         ]);
     }
-
-
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -69,22 +66,25 @@ class RegisterController extends Controller
         return User::create([
             'fullname' => $data['fullname'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'avatar' => time().'.'.$data['avatar']->extension(),
-            'role' => 2,
+            'password' => $data['password'],
+            'avatar' => time() . '.' . $data['avatar']->extension(),
+            'role' => config('custom.role'),
         ]);
     }
 
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        $file = $request->file('avatar');
-        $filename = time().'.'.$file->extension();
-        $file->storeAs('avatar/', $filename);
+        $this->uploadavatar($request);
         $user = $this->create($request->all());
         $this->guard()->login($user);
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+    }
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+    public function uploadAvatar(Request $request)
+    {
+        $file = $request->file('avatar');
+        $filename = time() . '.' . $file->extension();
+        $file->storeAs('avatar/', $filename);
     }
 }

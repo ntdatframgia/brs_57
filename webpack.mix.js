@@ -11,7 +11,6 @@ const { mix } = require('laravel-mix');
  |
  */
 
-
 mix.styles([
             'resources/assets/css/bootstrap.min.css',
             'resources/assets/css/AdminLTE.min.css',

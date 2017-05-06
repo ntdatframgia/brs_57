@@ -7,6 +7,12 @@ app/storage/
 
 # Laravel 5 & Lumen specific
 bootstrap/cache/
+public/css
+public/js
+public/dist
+public/plugins
+public/bootstrap
+public/mix-manifest.json
 .env.*.php
 .env.php
 .env

@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3">
           <div class="text-center">
-            <img src="{{asset($user->getPathAvatar())}}" class="avatar  width="200" height="200" img-circle" alt="avatar" >
+            <img src="{{ asset($user->avatar)}}" class="avatar img-circle" alt="avatar" >
           </div>
         </div>
         <div class="col-md-7 personal-info">
@@ -30,7 +30,7 @@
                           {{ Form::showErrField('fullname') }}
                       </div>
                   </div>
-
+                  {{ Form::hidden('id', "$user->id") }}
                   <div class="{!! Form::showErrClass('email') !!}">
                       {!! Form::label('email', trans('messages.email'), ['class'=> 'col-md-4 control-label']) !!}
 

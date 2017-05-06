@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -67,9 +69,9 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follow_id', 'user_id');
     }
 
-    public function getPathAvatar()
+    public function getAvatarAttribute($value)
     {
-        return config('custom.pathAvatar') . $this->avatar;
+        return config('custom.pathAvatar') . $value ;
     }
 
     public function setPasswordAttribute($value)

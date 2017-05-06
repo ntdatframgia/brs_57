@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Repositories\Contracts\UserRepositoryInterface as UserRepository;
 use File;
-use Hash;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,9 +17,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $userRepository;
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->middleware('auth');
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-        $users = User::all();
+        $users = $this->userRepository->paginate();
 
         return view('admin.user.list', ['users' => $users]);
     }
@@ -29,8 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        return view('admin.user.add', ['user' => $user]);
+        return view('admin.user.add');
     }
 
     /**
@@ -39,25 +46,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $validate =[
-            'fullname' => 'required|min:6',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|',
-            'avatar' => 'required|image|max:2000',
-        ];
-        $this->validate($request, $validate);
-        $newuser = new User;
-        $newuser->fullname = $request->fullname;
-        $newuser->email = $request->email;
-        $newuser->password = $request->password;
-        $file = $request->file('avatar');
-        $newuser->avatar = time() . '.' . $file->extension();
-        $newuser->role = config('custom.role');
-        $this->uploadavatar($request);
-        $newuser->save();
-        return redirect('users')->with('status', $request->email . ' Created Successfully !!!');
+        try {
+            $input  = $request->only('fullname', 'email', 'password', 'avatar');
+            $name = time() . '.' .$input['avatar']->extension();
+            $this->uploadAvatar($input, $name);
+            $input['avatar'] = $name;
+            $input['role'] = config('custom.role');
+            $this->userRepository->create($input);
+        } catch (Exception $e) {
+            return back()->with('status', trans('messages.create_error'));
+        }
+        return redirect('user')->with('status', $request->email . trans('messages.create_successs'));
     }
 
     /**
@@ -79,7 +80,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->userRepository->find($id);
         return view('admin.user.edit', ['user' => $user]);
     }
 
@@ -90,39 +91,35 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $validate =[
-            'fullname' => 'required|min:6',
-            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'confirmed|',
-            'avatar' => 'image|max:2000',
-        ];
-        $this->validate($request, $validate);
-        $user->email = $request->email;
-        $user->fullname = $request->fullname;
-        $file = $request->file('avatar');
-        if ($request->password != null) {
-            if (Hash::check($request->password, $user->password) == false) {
-                $user->password = $request->password;
+        try {
+            $user = $this->userRepository->find($id);
+            $input = $request->only('fullname', 'email', 'avatar', 'password');
+            if ($input['avatar']) {
+                $name = time() . '.' . $input['avatar']->extension();
+                File::delete(config('custom.pathAvatar') . $user->avatar);
+                $this->uploadavatar($request, $name);
+                $input['avatar'] = $name;
             }
-        }
+                $user->update($input);
+                return redirect('/user')->with('status', $user->email . trans('messages.updated_success'));
 
-        if ($file != null) {
-            File::delete('../storage/app/avatar/' . $user->avatar);
-            $this->uploadavatar($request);
-            $user->avatar = time() . '.' . $file->extension();
+        } catch (Exception $e) {
+            return back()->with('status', trans('messages.update_error'));
         }
-        $user->update();
-        return redirect('/users')->with('status', $user->email . ' profile updated');
     }
 
-
-    public function uploadavatar(Request $request)
+    public function destroy($id)
     {
-        $file = $request->file('avatar');
-        $filename = time() . '.' . $file->extension();
-        $file->storeAs('avatar/', $filename);
+        $user = $this->userRepository->find($id);
+        $user->destroy($id);
+        return redirect('/user')->with('status', $user->email . trans('messages.deleted_success'));
+    }
+
+    public function uploadAvatar($input, $name)
+    {
+        $file =  $input['avatar'];
+        $file->storeAs('avatars/', $name);
     }
 }

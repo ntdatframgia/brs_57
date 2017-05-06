@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/users';
+    protected $redirectTo = '/user';
 
     /**
      * Create a new controller instance.
@@ -63,11 +63,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $name = time() . '.' . $data['avatar']->extension();
+        $this->uploadavatar($request, $name);
         return User::create([
             'fullname' => $data['fullname'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'avatar' => time() . '.' . $data['avatar']->extension(),
+            'avatar' => $name,
             'role' => config('custom.role'),
         ]);
     }
@@ -75,16 +77,14 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        $this->uploadavatar($request);
         $user = $this->create($request->all());
         $this->guard()->login($user);
         return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 
-    public function uploadAvatar(Request $request)
+    public function uploadAvatar(Request $request, $name)
     {
         $file = $request->file('avatar');
-        $filename = time() . '.' . $file->extension();
-        $file->storeAs('avatar/', $filename);
+        $file->storeAs('avatars/', $filename);
     }
 }

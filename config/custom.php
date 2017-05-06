@@ -2,5 +2,6 @@
 
 return [
     'role' => 2,
-    'pathAvatar' => '../storage/app/avatar/',
+    'pathAvatar' => '../storage/app/avatars/',
+    'limit' => 10,
 ];

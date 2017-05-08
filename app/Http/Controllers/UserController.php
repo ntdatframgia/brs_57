@@ -9,6 +9,7 @@ use App\Repositories\Contracts\UserRepositoryInterface as UserRepository;
 use File;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use CustomUpload;
 
 class UserController extends Controller
 {
@@ -50,10 +51,8 @@ class UserController extends Controller
     {
         try {
             $input  = $request->all();
-            $name = time() . '.' .$input['avatar']->extension();
-            $this->uploadAvatar($input, $name);
-            $input['avatar'] = $name;
             $input['role'] = config('custom.role');
+            $input['avatar'] = CustomUpload::upload($input['avatar'], 'avatar');
             $this->userRepository->create($input);
         } catch (Exception $e) {
             return back()->with('status', trans('messages.create_error'));
@@ -95,15 +94,14 @@ class UserController extends Controller
     {
         try {
             $user = $this->userRepository->find($id);
+            $imageUrl = public_path($input['user_avatar']);
             $input = $request->all();
-            if ($request->avatar) {
-                $name = time() . '.' . $request->avatar->extension();
-                File::delete(config('custom.pathAvatar') . $user->avatar);
-                $this->uploadavatar($request, $name);
-                $input['avatar'] = $name;
+            if (File::exists($imageUrl)) {
+                File::delete($imageUrl);
             }
-                $this->userRepository->update($input, $id);
-                return redirect()->action('UserController@index')->with('status', $user->email . trans('messages.updated_success'));
+            $input['avatar'] = CustomUpload::upload($input['avatar'], 'avatar');
+            $user->update($input);
+            return redirect()->action('UserController@index')->with('status', $user->email . trans('messages.updated_success'));
         } catch (Exception $e) {
             return back()->with('status', trans('messages.update_error'));
         }
@@ -114,11 +112,5 @@ class UserController extends Controller
         $user = $this->userRepository->find($id);
         $user->destroy($id);
         return redirect()->action('UserController@index')->with('status', $user->email . trans('messages.deleted_success'));
-    }
-
-    public function uploadAvatar($input, $name)
-    {
-        $file =  $input['avatar'];
-        $file->storeAs('avatars/', $name);
     }
 }

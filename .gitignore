@@ -9,6 +9,7 @@ app/storage/
 bootstrap/cache/
 public/css
 public/js
+public/upload
 public/dist
 public/plugins
 public/bootstrap

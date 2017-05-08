@@ -37,4 +37,7 @@ return [
     'not_instance' => 'Not Instance',
     'update_error' => 'Update Error',
     'create_error' => 'Create Error',
+    'main_nav' => 'MAIN NAVIGATION',
+    'b_s' => 'B.S',
+    'book_share' => 'Book Share',
 ];

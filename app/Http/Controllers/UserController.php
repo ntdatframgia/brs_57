@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Repositories\Contracts\UserRepositoryInterface as UserRepository;
+use File;
+use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -12,13 +17,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $userRepository;
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->middleware('auth');
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-        $users = User::all();
+        $users = $this->userRepository->paginate();
 
         return view('admin.user.list', ['users' => $users]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.add');
     }
 
     /**
@@ -35,9 +46,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        try {
+            $input  = $request->all();
+            $name = time() . '.' .$input['avatar']->extension();
+            $this->uploadAvatar($input, $name);
+            $input['avatar'] = $name;
+            $input['role'] = config('custom.role');
+            $this->userRepository->create($input);
+        } catch (Exception $e) {
+            return back()->with('status', trans('messages.create_error'));
+        }
+        return redirect()->action('UserController@index')->with('status', $request->email . trans('messages.create_successs'));
     }
 
     /**
@@ -59,7 +80,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepository->find($id);
+        return view('admin.user.edit', ['user' => $user]);
     }
 
     /**
@@ -69,19 +91,34 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        try {
+            $user = $this->userRepository->find($id);
+            $input = $request->all();
+            if ($request->avatar) {
+                $name = time() . '.' . $request->avatar->extension();
+                File::delete(config('custom.pathAvatar') . $user->avatar);
+                $this->uploadavatar($request, $name);
+                $input['avatar'] = $name;
+            }
+                $this->userRepository->update($input, $id);
+                return redirect()->action('UserController@index')->with('status', $user->email . trans('messages.updated_success'));
+        } catch (Exception $e) {
+            return back()->with('status', trans('messages.update_error'));
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $user = $this->userRepository->find($id);
+        $user->destroy($id);
+        return redirect()->action('UserController@index')->with('status', $user->email . trans('messages.deleted_success'));
+    }
+
+    public function uploadAvatar($input, $name)
+    {
+        $file =  $input['avatar'];
+        $file->storeAs('avatars/', $name);
     }
 }

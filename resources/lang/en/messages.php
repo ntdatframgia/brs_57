@@ -28,4 +28,13 @@ return [
     '404' => '404 Not Found',
     'err_message' => 'Sorry, an error has occured, Requested page not found!',
     'take_me_home' => 'Take Me Home',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'update' => 'Update',
+    'created_success' => 'Created Successfully !!!',
+    'deleted_success' => 'Deleted Successfully !!!',
+    'updated_success' => 'Updated Successfully !!!',
+    'not_instance' => 'Not Instance',
+    'update_error' => 'Update Error',
+    'create_error' => 'Create Error',
 ];

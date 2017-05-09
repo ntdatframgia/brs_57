@@ -12,6 +12,7 @@ public/js
 public/dist
 public/plugins
 public/bootstrap
+public/upload
 public/mix-manifest.json
 .env.*.php
 .env.php

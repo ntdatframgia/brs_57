@@ -94,7 +94,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->userRepository->find($id);
-            $imageUrl = public_path($input['user_avatar']);
+            $imageUrl = public_path(config('config.custom').$user->getOriginal('avatar'));
             $input = $request->all();
             if (File::exists($imageUrl)) {
                 File::delete($imageUrl);

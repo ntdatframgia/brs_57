@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
                 'fullname' => 'required|min:6',
                 'email' => 'required|email|max:255|unique:users,email,' . $request->id,
                 'avatar' => 'image|max:2000',
-                'password' => 'confirmed|min:7|max:32',
+                'password' => 'confirmed|min:6|max:32',
             ];
             if (strpos($request->password, ' ') !== false) {
                 $arr['password'] = 'required|confirmed|min:6|max:32';
@@ -38,10 +38,10 @@ class UserRequest extends FormRequest
             return $arr;
         }
         return [
-            'fullname' => 'required|min:6',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'without_spaces|required|confirmed|min:6|max:32',
-            'avatar' => 'required|image|max:2000',
+        'fullname' => 'required|min:6',
+        'email' => 'required|email|max:255|unique:users',
+        'password' => 'required|confirmed|min:6|max:32',
+        'avatar' => 'required|image|max:2000',
         ];
     }
 

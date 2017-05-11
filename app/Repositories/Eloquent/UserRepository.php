@@ -9,7 +9,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     function model()
     {
-        return 'App\Models\User';
+        return \App\Models\User::class;
     }
 
     public function updateProfile(array $data, $id, $attribute = 'id', $withSoftDelete = false)

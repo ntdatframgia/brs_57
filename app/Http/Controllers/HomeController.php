@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\BookRepositoryInterface as BookRepository;
 
 class HomeController extends Controller
 {
@@ -11,9 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    private $bookRepository;
+
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->middleware('auth');
+        $this->bookRepository = $bookRepository;
     }
 
     /**
@@ -23,6 +26,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.listuser');
+        $books = $this->bookRepository->paginate(4);
+        return view('frontend.index', ['books' => $books]);
+    }
+
+    public function detail($id)
+    {
+        $book = $this->bookRepository->find($id);
+        return view('frontend.detail', ['book' => $book]);
     }
 }

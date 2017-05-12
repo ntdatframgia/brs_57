@@ -24,3 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('book', 'BookController');
 
 });
+
+Route::get('home/index', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+
+Route::get('home/detail/{id}', ['as' => 'home.detail', 'uses' => 'HomeController@detail']);

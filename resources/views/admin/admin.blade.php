@@ -13,12 +13,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    {{ Html::style('dist/css/AdminLTE.min.css') }}
 
-    {{ Html::style('dist/css/mystyle.css') }}
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-    {{ Html::style('dist/css/skins/_all-skins.min.css') }}
+    {{ Html::style('css/all.css') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -209,13 +205,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="{{ route('user.create') }}"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i> List User</a></li>
+            <li><a href="{{ route('user.create') }}"><i class="fa fa-circle-o"></i> Add User</a></li>
           </ul>
         </li>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Manage User</span>
+            <i class="fa fa-dashboard"></i> <span>Manage Category</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -223,6 +219,18 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i> List Category</a></li>
             <li><a href="{{ route('category.create') }}"><i class="fa fa-circle-o"></i> Add Category</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Manage book</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('book.index') }}"><i class="fa fa-circle-o"></i> List Book</a></li>
+            <li><a href="{{ route('book.create') }}"><i class="fa fa-circle-o"></i> Add Book</a></li>
           </ul>
         </li>
       </ul>
@@ -272,19 +280,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-{{ Html::script('plugins/jQuery/jquery-2.2.3.min.js') }}
-<!-- Bootstrap 3.3.6 -->
-{{ Html::script('bootstrap/js/bootstrap.min.js') }}
-<!-- SlimScroll -->
-{{ Html::script('plugins/slimScroll/jquery.slimscroll.min.js') }}
-<!-- FastClick -->
-{{ Html::script('plugins/fastclick/fastclick.js') }}
-<!-- AdminLTE App -->
-{{ Html::script('dist/js/app.min.js') }}
 <!-- AdminLTE for demo purposes -->
-{{ Html::script('dist/js/demo.js') }}
-<!-- AdminLTE for demo purposes -->
-{{ Html::script('dist/myscript1.js') }}
+{{ Html::script('js/all.js') }}
 </body>
 </html>

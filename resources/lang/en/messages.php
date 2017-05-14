@@ -58,4 +58,5 @@ return [
     'book_category' => 'Category',
     'number_of_page' => 'Number Of Page',
     'by' => 'By',
+    'comments' => 'comments',
 ];

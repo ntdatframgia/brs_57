@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    // make comment
     $('#comment').on({
         keypress: function(e) {
             if(e.which == 13 && !event.shiftKey) {
@@ -14,7 +15,9 @@ $( document ).ready(function() {
                             $('.box-comments').prepend(data);
                             $('#comment').val('');
                             var count = parseInt($('#countItem').attr('data-sum'));
-                            $('#countItem').text(count++);
+                            $('#countItem').text(++count);
+                            var total = parseInt($('#totalComment').text());
+                            $('#totalComment').text(++total);
                         }
                     });
                 }
@@ -92,6 +95,10 @@ $( document ).ready(function() {
                 data : {_token:token,_method:"DELETE",id:commentId},
                 success:function(data){
                     $('.box-comment[data-id="' + commentId + '"]').addClass('hide');
+                    var count = parseInt($('#countItem').text());
+                    $('#countItem').text(--count);
+                    var total = parseInt($('#totalComment').text());
+                    $('#totalComment').text(--total);
                 }
             });
         }

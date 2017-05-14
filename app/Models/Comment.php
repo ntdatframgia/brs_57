@@ -10,12 +10,11 @@ class Comment extends Model
         'comment',
         'user_id',
         'book_id',
-        'rate',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(\App\Models\User::class);
     }
 
     public function activities()

@@ -25,5 +25,6 @@ mix.scripts([
             'resources/assets/bootstrap-datepicker.js',
             'resources/assets/myscript1.js',
             'resources/assets/comment.js',
+            'resources/assets/mark.js',
             'resources/assets/dist/js/app.min.js',],'public/js/all.js')
 ;

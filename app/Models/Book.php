@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
 use App\Models\Category;
+use App\Models\Mark;
 
 class Book extends Model
 {
@@ -22,6 +23,11 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function mark()
+    {
+        return $this->hasOne(Mark::class);
     }
 
     public function comments()

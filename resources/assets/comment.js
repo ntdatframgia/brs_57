@@ -72,7 +72,6 @@ $( document ).ready(function() {
                     type :"PUT",
                     data: {data:data, _token:token,id:id},
                     success:function(data) {
-                        console.log(data);
                         $('textarea[data-id="' + id + '"]').addClass('hide');
                         $('.commentText[data-id="' + id + '"]').text(data.data);
                         $('.commentText[data-id="' + id + '"]').removeClass('hide');

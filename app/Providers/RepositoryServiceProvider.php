@@ -11,7 +11,9 @@ use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Eloquent\BookRepository;
 use App\Repositories\Eloquent\CommentRepository;
+use App\Repositories\Eloquent\MarkRepository;
 use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\MarkRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -36,5 +38,6 @@ class RepositoryServiceProvider extends ServiceProvider
         App::bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         App::bind(BookRepositoryInterface::class, BookRepository::class);
         App::bind(CommentRepositoryInterface::class, CommentRepository::class);
+        App::bind(MarkRepositoryInterface::class, MarkRepository::class);
     }
 }

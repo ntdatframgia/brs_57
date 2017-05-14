@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::resource('comment', 'CommentController');
 
+Route::resource('mark', 'MarkController');
+
 Route::get('home/index', ['as' => 'home.index', 'uses' => 'HomeController@index'])->middleware('auth');
 
 Route::get('home/detail/{id}', ['as' => 'home.detail', 'uses' => 'HomeController@detail'])->middleware('auth');

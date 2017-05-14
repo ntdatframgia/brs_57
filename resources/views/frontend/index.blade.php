@@ -8,29 +8,46 @@
         <img class="media-object image-book" src="{{ $book->img }}">
       </a>
       <div class="media-body">
-        <a href="{{ route('home.detail', $book->id) }}" ><h4 class="media-heading">{{ $book->title }}</h4></a>
+        <h4 class="media-heading"><a href="{{ route('home.detail', $book->id) }}" >{{ $book->title }}</a></h4>
           <p class="text-right">{{ trans('messages.by') }} {{ $book->author }}</p>
           <p>{{ str_limit($book->description, $limit = 250, $end = '...') }}</p>
           <ul class="list-inline list-unstyled">
-        <li><span><i class="glyphicon glyphicon-calendar"></i>{{ $book->public_date }}</span></li>
+            <li><span><i class="fa fa-calendar-check-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d', $book->public_date)->format('d M Y')  }} </span></li>
             <li>|</li>
-            <span><i class="glyphicon glyphicon-comment"></i> {{ count($book->comments) }} {{ trans('messages.comments') }}</span>
+              {{ $book->category()->withTrashed()->get()->first()->name }}
             <li>|</li>
             <li>
-               <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
+            <span><i class="fa fa-comments"></i> {{ count($book->comments) }} {{ trans('messages.comments') }}</span>
+            <li>|</li>
+            <span id="markBook"
+                data-markId="{{ $book->mark['id'] }}" data-bookId="{{ $book->id }}"
+                data-user="{{ Auth::user()->id }}" data-url="{{ route('mark.store') }}"
+                data-favorite="@empty($book->mark['favorite']) 0 @else {{ $book->mark['favorite'] }} @endempty" data-read_status="@empty($book->mark['read_status']) 0 @else {{ $book->mark['read_status'] }} @endempty"
+                data-token={{ csrf_token() }}>
+            </span>
+            <li>
+                <span data-type = '1' class=" markItem btn btn-box " data-toggle="tooltip" title="" data-original-title="Mark as favorite">
+                    <i  class="@if ( $book->mark['favorite'] == 1 && Auth::user()->id == $book->mark['user_id']) {{ "favoriteStatus" }} @endif  fa fa-fw fa-bookmark"></i>
+                </span>
             </li>
             <li>|</li>
             <li>
-            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
-              <span><i class="fa fa-facebook-square"></i></span>
-              <span><i class="fa fa-twitter-square"></i></span>
-              <span><i class="fa fa-google-plus-square"></i></span>
+                <span  data-type = '2' class="markItem btn btn-box" data-toggle="tooltip" title="" data-original-title="Mark as reading">
+                    <i class="fa fa-flag-checkered @if ( $book->mark['read_status'] == 1 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i>
+                </span>
             </li>
-      </ul>
+            <li>|</li>
+            <li>
+                <span data-type = '3' class="markItem btn btn-box " data-toggle="tooltip" title="" data-original-title="Mark as readed">
+                    <i class="fa fa-flag @if ( $book->mark['read_status'] == 2 && Auth::user()->id == $book->mark['user_id']) {{ "readStatus" }} @endif"></i>
+                </span>
+            </li>
+
+                </span>
+            <li>|</li>
+              <span>Rate: {{ $book->rate}} <i class="fa fa-star-o" data-toggle="tooltip" style="color:gold" aria-hidden="true"></i></span>
+            <li>
+        </ul>
        </div>
     </div>
   </div>

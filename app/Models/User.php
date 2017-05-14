@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function marks()
     {
-        return $this->hasMany(Mark::class);
+        return $this->belongsToMany(Book::class, 'marks');
     }
 
     public function comments()

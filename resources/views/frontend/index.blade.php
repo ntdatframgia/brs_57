@@ -14,7 +14,7 @@
           <ul class="list-inline list-unstyled">
         <li><span><i class="glyphicon glyphicon-calendar"></i>{{ $book->public_date }}</span></li>
             <li>|</li>
-            <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+            <span><i class="glyphicon glyphicon-comment"></i> {{ count($book->comments) }} {{ trans('messages.comments') }}</span>
             <li>|</li>
             <li>
                <span class="glyphicon glyphicon-star"></span>

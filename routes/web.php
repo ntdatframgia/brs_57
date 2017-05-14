@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('user', 'UserController');
 
@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('book', 'BookController');
 
 });
+Route::resource('comment', 'CommentController');
 
-Route::get('home/index', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+Route::get('home/index', ['as' => 'home.index', 'uses' => 'HomeController@index'])->middleware('auth');
 
-Route::get('home/detail/{id}', ['as' => 'home.detail', 'uses' => 'HomeController@detail']);
+Route::get('home/detail/{id}', ['as' => 'home.detail', 'uses' => 'HomeController@detail'])->middleware('auth');

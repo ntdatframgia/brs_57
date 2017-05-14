@@ -57,7 +57,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             return back()->with('status', trans('messages.create_error'));
         }
-        return redirect()->action('UserController@index')->with('status', $request->email . trans('messages.create_successs'));
+        return redirect()->action('UserController@index')->with('status', $request->email . trans('messages.created_successs'));
     }
 
     /**

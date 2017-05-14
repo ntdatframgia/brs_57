@@ -62,13 +62,13 @@ abstract class BaseRepository implements RepositoryInterface
         if (func_num_args() == 2) {
             list($value, $operator) = [$operator, '='];
         }
-        $this->where[] = [$coditions, $operator, $value];
-        return $this;
+        $this->where[] = [$conditions, $operator, $value];
+        return $this->model->where($this->where);
     }
 
     public function create(array $input)
     {
-        $model = $this->model->create($input);
+        return $this->model->create($input);
     }
 
     public function update(array $input, $id)
@@ -76,7 +76,7 @@ abstract class BaseRepository implements RepositoryInterface
         $model = $this->model->findOrFail($id);
         $model->fill($input);
         $model->save();
-        return $this;
+        return $model;
     }
 
     public function delete($id)
